@@ -1,5 +1,8 @@
 import java.awt.CardLayout;
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
@@ -45,23 +48,57 @@ public class BurgeriaMain extends JFrame{
 		setJMenuBar(menubar);
 		add(BurgeriaMainPanel);
 
-
+			
 		//add each panel to main panel
-//		OrderPanel orderPanel = new OrderPanel(/*parameters*/);
-//		BurgeriaMainPanel.add(orderPanel, "Order Panel");
+//			OrderPanel orderPanel = new OrderPanel(/*parameters*/);
+//			BurgeriaMainPanel.add(orderPanel, "Order Panel");
 //			
-//		CookPanel cookPanel = new CookPanel(/*parameters*/);
-//		BurgeriaMainPanel.add(cookPanel, "Cook Panel");
+//			CookPanel cookPanel = new CookPanel(/*parameters*/);
+//			BurgeriaMainPanel.add(cookPanel, "Cook Panel");
 //			
-//		AssemblePanel assemblePanel = new AssemblePanel(/*parameters*/);
-//		BurgeriaMainPanel.add(assemblePanel, "Assemble Panel");
+//			AssemblePanel assemblePanel = new AssemblePanel();
+//			BurgeriaMainPanel.add(assemblePanel, "Assemble Panel");
+//			
+			
+			
+		//action listeners
 
+		menItOrder.addActionListener(new ActionListener() {
 
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				cl.show(BurgeriaMainPanel, "Order Panel");
+			}
 
+		});
 
+		menItCook.addActionListener(new ActionListener() {
 
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				cl.show(BurgeriaMainPanel, "Cook Panel");
+			}
 
+		});
 
+		menItAssemble.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				cl.show(BurgeriaMainPanel, "Assemble Panel");
+			}
+
+		});
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
 		setVisible(true);
 		setDefaultCloseOperation(this.EXIT_ON_CLOSE);
 	}
@@ -70,6 +107,26 @@ public class BurgeriaMain extends JFrame{
 	public static void main(String[] args)
 	{
 		new BurgeriaMain();
+	}
+	
+	public static BufferedImage scale(BufferedImage src, int w, int h)
+	{
+	    BufferedImage img = 
+	            new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
+	    int x, y;
+	    int ww = src.getWidth();
+	    int hh = src.getHeight();
+	    int[] ys = new int[h];
+	    for (y = 0; y < h; y++)
+	        ys[y] = y * hh / h;
+	    for (x = 0; x < w; x++) {
+	        int newX = x * ww / w;
+	        for (y = 0; y < h; y++) {
+	            int col = src.getRGB(newX, ys[y]);
+	            img.setRGB(x, y, col);
+	        }
+	    }
+	    return img;
 	}
 
 		
