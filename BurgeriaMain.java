@@ -22,7 +22,7 @@ public class BurgeriaMain extends JFrame{
 		setResizable(false);
 
 		//bounds for jframe
-		setBounds(50,50,1200,600);
+		setBounds(50,50,1200,650);
 
 
 		//making menu
