@@ -1,0 +1,58 @@
+
+public class Orders {
+	
+	private int patties; 
+	private String condiments; 
+	private boolean cheese; 
+	private boolean lettuce; 
+	private boolean pickles; 
+	private boolean tomatoes; 
+	private boolean onions;
+	private static int ticketNumber = 0; 
+	
+	public Orders(int p, String c, boolean ch, boolean l, boolean pi, boolean t, boolean o) {
+		patties = p; 
+		condiments = c; 
+		cheese = ch; 
+		lettuce = l; 
+		pickles = pi; 
+		tomatoes = t; 
+		onions = o; 
+		ticketNumber ++; 
+	}
+	
+	public int getPatties() {
+		return patties;
+	}
+	
+	public String getCondiments() {
+		return condiments; 
+	}
+	
+	public boolean getCheese() {
+		return cheese;
+	}
+	
+	public boolean getLettuce() {
+		return lettuce;
+	}
+	
+	public boolean getPickles() {
+		return pickles; 
+	}
+	
+	public boolean getTomatoes() {
+		return tomatoes; 
+	}
+	
+	public boolean getOnions() {
+		return onions; 
+	}
+	
+	public int getTicketNumber() {
+		return ticketNumber; 
+	}
+	
+	
+
+}
