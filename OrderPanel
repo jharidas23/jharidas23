@@ -1,0 +1,227 @@
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Rectangle;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.geom.Ellipse2D;
+import java.awt.geom.Rectangle2D.Double;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Collection;
+
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComponent;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.ScrollPaneConstants;
+
+public class OrderPanel extends JPanel{
+	
+	private Rectangle wall; 
+	private Rectangle counter; 
+	private Rectangle orderButton; 
+	private Rectangle wireTop; 
+	private Rectangle wireMiddle; 
+	private Rectangle wireBottom; 
+	//private Rectangle ticket; 
+	private Ellipse2D.Double ticketCircle; 
+	
+	
+	public OrderPanel(ArrayList <String> ticketInformation) {
+		
+		setLayout(null); 
+		
+		drawBackground(); 
+		
+		//JLabel picLabel = null; 
+		
+		//try {
+		//	BufferedImage myPic3c bture = ImageIO.read(new File("Order Station.png"));
+		//	myPicture = BurgeriaMain.scale(myPicture, 800, 600); 
+		//	picLabel = new JLabel (new ImageIcon(myPicture));
+		//	add(picLabel);
+		//catch (Exception e) {}
+		
+		//final JTextArea label  = new JTextArea(16, 58);
+		//label.setLocation(300, 300);
+		//label.setEditable(false); // set textArea non-editable
+		//JScrollPane scroll = new JScrollPane(label);
+		//scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		
+		
+		
+		//picLabel.setBounds(0,0,800,600);
+		
+		JLabel cheeseLabel = new JLabel("Cheese: ");
+		cheeseLabel.setLocation(100, 475);
+		add(cheeseLabel);
+		cheeseLabel.setVisible(true);
+	
+		
+		JButton button = new JButton("Get Order");
+		button.setBounds(30,475,100,50);
+		add(button);
+		button.addActionListener(new ActionListener() 
+		{
+			@Override
+			public void actionPerformed(ActionEvent e) 
+			{
+				Orders order = random(); 
+				JOptionPane pane = new JOptionPane();
+				String theOrder = " # of Patties: " + order.getPatties() + "\nCondiments: " + order.getCondiments();
+				if(order.getCheese() == true) {
+					theOrder += "\nCheese";
+				}
+				if(order.getLettuce() == true) {
+					theOrder += "\nLettuce";
+				}
+				if(order.getTomatoes() == true) {
+					theOrder += "\nTomatoes";
+				}
+				if(order.getPickles() == true) {
+					theOrder += "\nPickles";
+				}
+				if(order.getOnions() == true) {
+					theOrder += "\nOnions";
+				}
+				final String menu = theOrder;
+				ticketInformation.add(theOrder);
+				//String theOrder = " # of Patties: " + order.getPatties() + "\nCondiments: " + order.getCondiments() + "\nCheese: " + order.getCheese() +  "\nLettuce: " + order.getLettuce() + "\nTomatoes: " + order.getTomatoes() + "\nPickles: " + order.getPickles() + "\nOnions: " + order.getOnions();
+				int result = JOptionPane.showInternalConfirmDialog(null,theOrder, "Take Order", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);;
+				//if(result == JOptionPane.OK_OPTION) {
+				//	drawTicket();
+				//}
+				// } else if (result == JOptionPane.CANCEL_OPTION){
+				//	 label.append("");
+				// }
+		
+			}
+			
+		});
+		
+		
+		
+		
+		
+		
+		
+	}
+	public void drawBackground() {
+		wall = new Rectangle(0, 0, 1200, 400);
+		counter = new Rectangle (0, 400, 1200, 200);
+		
+		wireTop = new Rectangle(0,10,1200,2);
+		wireMiddle = new Rectangle(0, 12, 1200, 2);
+		wireBottom = new Rectangle(0,14,1200,3);
+		
+		//ticket = new Rectangle(625, 70, 250, 400);
+		
+		orderButton = new Rectangle(30, 475, 100, 50);
+		ticketCircle = new Ellipse2D.Double(625, -20, 200, 200); 
+		
+	}
+	public void paintComponent (Graphics g) {
+		Graphics2D g2 = (Graphics2D) g;
+		
+		g2.setColor(Color.LIGHT_GRAY); //blue
+		g2.fill(wall);
+		
+		g2.setColor(Color.GREEN); //grey
+		g2.fill(counter);
+		
+		g2.setColor(new Color(192, 192, 192));
+		g2.fill(wireMiddle);
+		g2.setColor(Color.BLACK);
+		g2.fill(wireTop);
+		g2.fill(wireBottom);
+	
+		//g2.setColor(Color.WHITE);
+		//g2.fill(ticket);
+		
+		g2.setColor(Color.RED);
+		g2.fill(orderButton);
+		
+		g2.setColor(new Color(64, 64, 64));
+		g2.fill(ticketCircle);
+		
+	}
+
+	public static void main(String[] args) {
+		JFrame.setDefaultLookAndFeelDecorated(true);
+		JFrame myFrame = new JFrame ("Order"); 
+		myFrame.setBounds(50,50,800,600); 
+		
+		JPanel panel = new OrderPanel(); 
+		myFrame.add(panel);
+	
+	
+		myFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		
+		myFrame.setVisible(true);	
+		
+	}
+
+	
+	public static Orders random() {
+		int patties = 1; 
+		String condiments = "Ketchup";
+		boolean cheese = true; 
+		boolean lettuce = true; 
+		boolean pickles = true; 
+		boolean tomatoes = true; 
+		boolean onion = true; 
+		int random = (int) (Math.random() * 2) + 1; 
+		if(random == 1) {
+			cheese = false; 
+		}
+		random = (int) (Math.random() * 2) + 1;
+		if(random == 1) {
+			lettuce = false; 
+		}
+		random = (int) (Math.random() * 2) + 1;
+		if(random == 1) {
+			pickles = false; 
+		}
+		random = (int) (Math.random() * 2) + 1;
+		if(random == 1) {
+			tomatoes = false; 
+		}
+		random = (int) (Math.random() * 2) + 1;
+		if(random == 1) {
+			onion = false; 
+		}
+		random = (int) (Math.random() * 3) + 1;
+		if(random == 1) {
+			patties = 2; 
+		}
+		else if(random == 2) {
+			patties = 3; 
+		}
+		random = (int) (Math.random() * 4) + 1;
+		if(random == 1) {
+			condiments = "Mayo"; 
+		}
+		else if(random == 2) {
+			condiments = "Mustard"; 
+		}
+		else if(random == 3) {
+			condiments = "Barbeque";
+		}
+		Orders newOrder = new Orders(patties, condiments, cheese, lettuce, pickles, tomatoes, onion);
+		return newOrder; 
+	}
+	
+
+
+}
