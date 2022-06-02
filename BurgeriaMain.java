@@ -14,6 +14,8 @@ import javax.swing.SwingConstants;
 
 public class BurgeriaMain extends JFrame{
 	
+	private ArrayList <String> theOrders = new ArrayList <String>(); 
+	
 	public BurgeriaMain() {
 		//making overall panel
 		CardLayout cl = new CardLayout();
@@ -50,7 +52,7 @@ public class BurgeriaMain extends JFrame{
 
 			
 		//add each panel to main panel
-//			OrderPanel orderPanel = new OrderPanel(/*parameters*/);
+//			OrderPanel orderPanel = new OrderPanel(theOrders);
 //			BurgeriaMainPanel.add(orderPanel, "Order Panel");
 //			
 //			CookPanel cookPanel = new CookPanel(/*parameters*/);
