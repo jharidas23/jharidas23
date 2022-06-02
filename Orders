@@ -52,7 +52,25 @@ public class Orders {
 	public int getTicketNumber() {
 		return ticketNumber; 
 	}
-	
+	public int getTotal() {
+		int total = patties + 1; 
+		if(cheese) {
+			total ++;
+		}
+		if(lettuce) {
+			total ++; 
+		}
+		if(pickles) {
+			total ++; 
+		}
+		if(tomatoes) {
+			total ++;
+		}
+		if(onions) {
+			total ++;
+		}
+		return total;
+	}
 	
 
 }
