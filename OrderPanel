@@ -37,7 +37,7 @@ public class OrderPanel extends JPanel{
 	private Ellipse2D.Double ticketCircle; 
 	
 	
-	public OrderPanel(ArrayList <String> ticketInformation) {
+	public OrderPanel(ArrayList <String> ticketInformation, ArrayList <String> price) {
 		
 		setLayout(null); 
 		
@@ -76,41 +76,36 @@ public class OrderPanel extends JPanel{
 			@Override
 			public void actionPerformed(ActionEvent e) 
 			{
-				if(BurgeriaMain.getNumOrders()<=8) {
-					Orders order = random(); 
-					JOptionPane pane = new JOptionPane();
-					String theOrder = orderofOrders(order);
-					
-					BurgeriaMain.incrementNumOrders();
-					//String theOrder = " # of Patties: " + order.getPatties() + "\nCondiments: " + order.getCondiments();
-					//if(order.getCheese() == true) {
-					//	theOrder += "\nCheese";
-					//}
-					//if(order.getLettuce() == true) {
-					//	theOrder += "\nLettuce";
-					//}
-					//if(order.getTomatoes() == true) {
-					//	theOrder += "\nTomatoes";
-					//}
-					//if(order.getPickles() == true) {
-					//	theOrder += "\nPickles";
-					//}
-					//if(order.getOnions() == true) {
-					//	theOrder += "\nOnions";
-					//}
-					final String menu = theOrder;
-					ticketInformation.add(theOrder);
-					//String theOrder = " # of Patties: " + order.getPatties() + "\nCondiments: " + order.getCondiments() + "\nCheese: " + order.getCheese() +  "\nLettuce: " + order.getLettuce() + "\nTomatoes: " + order.getTomatoes() + "\nPickles: " + order.getPickles() + "\nOnions: " + order.getOnions();
-					int result = JOptionPane.showInternalConfirmDialog(null,theOrder, "Take Order", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);;
-					//if(r8esult == JOptionPane.OK_OPTION) {
-					//	drawTicket();
-					//}
-					// } else if (result == JOptionPane.CANCEL_OPTION){
-					//	 label.append("");
-					// }
-			
-				}
-				
+				Orders order = random(); 
+				JOptionPane pane = new JOptionPane();
+				String theOrder = order.getTicketNumber() + "\n" + orderofOrders(order, ticketInformation) + "\nPrice: $" + order.getPrice();
+				price.add(order.getTicketNumber() + "," + order.getPrice()); 
+				//String theOrder = " # of Patties: " + order.getPatties() + "\nCondiments: " + order.getCondiments();
+				//if(order.getCheese() == true) {
+				//	theOrder += "\nCheese";
+				//}
+				//if(order.getLettuce() == true) {
+				//	theOrder += "\nLettuce";
+				//}
+				//if(order.getTomatoes() == true) {
+				//	theOrder += "\nTomatoes";
+				//}
+				//if(order.getPickles() == true) {
+				//	theOrder += "\nPickles";
+				//}
+				//if(order.getOnions() == true) {
+				//	theOrder += "\nOnions";
+				//}
+				final String menu = theOrder;
+				//String theOrder = " # of Patties: " + order.getPatties() + "\nCondiments: " + order.getCondiments() + "\nCheese: " + order.getCheese() +  "\nLettuce: " + order.getLettuce() + "\nTomatoes: " + order.getTomatoes() + "\nPickles: " + order.getPickles() + "\nOnions: " + order.getOnions();
+				int result = JOptionPane.showInternalConfirmDialog(null,theOrder, "Take Order", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);;
+				//if(r8esult == JOptionPane.OK_OPTION) {
+				//	drawTicket();
+				//}
+				// } else if (result == JOptionPane.CANCEL_OPTION){
+				//	 label.append("");
+				// }
+		
 			}
 			
 		});
@@ -168,7 +163,8 @@ public class OrderPanel extends JPanel{
 		myFrame.setBounds(50,50,1200,600); 
 		
 		ArrayList <String > orders = new ArrayList <String>();
-		JPanel panel = new OrderPanel(orders); 
+		ArrayList <String > price = new ArrayList<String>(); 
+		JPanel panel = new OrderPanel(orders, price); 
 		myFrame.add(panel);
 	
 	
@@ -229,11 +225,13 @@ public class OrderPanel extends JPanel{
 		return newOrder; 
 	}
 	
-	public static String orderofOrders(Orders order) {
+	public static String orderofOrders(Orders order, ArrayList <String> ticketInformation) {
 		ArrayList <String> theOrder = new ArrayList <String>(); 
+		String complete = order.getTicketNumber() + ","; 
+		
 		theOrder.add(order.getCondiments()); 
 		for(int i = 0; i < order.getPatties(); i ++) {
-			theOrder.add("Patty");
+			theOrder.add("Patties");
 		}
 		if(order.getCheese() == true) {
 			theOrder.add("Cheese");
@@ -251,11 +249,16 @@ public class OrderPanel extends JPanel{
 			theOrder.add("Onions");
 		}
 		String done = ""; 
+		done += "Top Bun \n";
 		for(int i = 0; i < order.getTotal(); i++) {
 			int random = (int) (Math.random())*theOrder.size(); 
 			done += theOrder.get(random) + "\n";
+			complete += theOrder.get(random) + ",";
 			theOrder.remove(random);
-		}
+		} 
+		done += "Bottom Bun";
+		complete += "Bottom Bun"; 
+		ticketInformation.add(complete);
 		return done; 
 		
 	}
