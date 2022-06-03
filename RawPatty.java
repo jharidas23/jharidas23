@@ -23,7 +23,7 @@ public class RawPatty extends JComponent{
 	
 	private RawPatty obj = this;
 	
-	public RawPatty(int x, int y, ArrayList<JComponent> stackedItems, char screen){
+	public RawPatty(int x, int y, ArrayList<String> stackedItems, char screen, AssemblePanel aPanel){
 		
 		setLocation(x,y);
 		setSize(101, 61);
@@ -82,8 +82,9 @@ public class RawPatty extends JComponent{
 
 				if(!donePlacing && screen == 'a') {
 					dropped = true;
-					stackedItems.add(obj);
+					stackedItems.add("Patty");
 					donePlacing = true;
+					
 				}
 			
 			}
