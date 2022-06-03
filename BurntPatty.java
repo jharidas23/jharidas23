@@ -21,7 +21,6 @@ public class BurntPatty extends JComponent{
 	
 	private Timer t;
 	private Cook cPanel;
-	private String type;  
 	private char screen; 
 	
 	private ArrayList<String> assembledItems; 
@@ -32,7 +31,7 @@ public class BurntPatty extends JComponent{
 	private boolean donePlacing = false;
 	
 	public BurntPatty(int x, int y, ArrayList<String> stackedItems, char sc, Cook cookPanel, AssemblePanel aPanel){
-		type = "Burnt";		
+		
 		cPanel = cookPanel;
 		
 		assembledItems = stackedItems; 
@@ -80,7 +79,7 @@ public class BurntPatty extends JComponent{
 				{
 					if(!donePlacing) {
 						dropped = true;
-						order.add("Patty");
+						assembledItems.add("Patty");
 						donePlacing = true;
 				}
 			}
