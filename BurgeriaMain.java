@@ -3,6 +3,7 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
@@ -14,7 +15,11 @@ import javax.swing.SwingConstants;
 
 public class BurgeriaMain extends JFrame{
 	
-	private ArrayList <String> theOrders = new ArrayList <String>(); 
+	private static ArrayList <String> theOrders;
+	private ArrayList<Boolean> completedOrders;//booleans appear in same order as theOrders and is true if
+	//order has been completed and sent out.
+	private static double money;
+	private static int numOrders;
 	
 	public BurgeriaMain() {
 		//making overall panel
@@ -24,7 +29,12 @@ public class BurgeriaMain extends JFrame{
 		setResizable(false);
 
 		//bounds for jframe
-		setBounds(50,50,1200,650);
+		setBounds(25,25,1200,650);
+		
+		//initialize fields
+		theOrders = new ArrayList<String>();
+		money = 5;
+		numOrders = 0;
 
 
 		//making menu
@@ -52,14 +62,14 @@ public class BurgeriaMain extends JFrame{
 
 			
 		//add each panel to main panel
-//			OrderPanel orderPanel = new OrderPanel(theOrders);
-//			BurgeriaMainPanel.add(orderPanel, "Order Panel");
+			OrderPanel orderPanel = new OrderPanel(theOrders);
+			BurgeriaMainPanel.add(orderPanel, "Order Panel");
 //			
 //			CookPanel cookPanel = new CookPanel(/*parameters*/);
 //			BurgeriaMainPanel.add(cookPanel, "Cook Panel");
 //			
-//			AssemblePanel assemblePanel = new AssemblePanel();
-//			BurgeriaMainPanel.add(assemblePanel, "Assemble Panel");
+			AssemblePanel assemblePanel = new AssemblePanel(theOrders);
+			BurgeriaMainPanel.add(assemblePanel, "Assemble Panel");
 //			
 			
 			
@@ -88,6 +98,8 @@ public class BurgeriaMain extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				cl.show(BurgeriaMainPanel, "Assemble Panel");
+				//assemblePanel.add(comp)
+				assemblePanel.addButtons();
 			}
 
 		});
@@ -111,24 +123,25 @@ public class BurgeriaMain extends JFrame{
 		new BurgeriaMain();
 	}
 	
-	public static BufferedImage scale(BufferedImage src, int w, int h)
-	{
-	    BufferedImage img = 
-	            new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
-	    int x, y;
-	    int ww = src.getWidth();
-	    int hh = src.getHeight();
-	    int[] ys = new int[h];
-	    for (y = 0; y < h; y++)
-	        ys[y] = y * hh / h;
-	    for (x = 0; x < w; x++) {
-	        int newX = x * ww / w;
-	        for (y = 0; y < h; y++) {
-	            int col = src.getRGB(newX, ys[y]);
-	            img.setRGB(x, y, col);
-	        }
-	    }
-	    return img;
+	public static ArrayList<String> getTheOrders(){
+		return theOrders;
+	}
+	public static double getMoney() {
+		return money;
+	}
+	public static int getNumOrders() {
+		return numOrders;
+	}
+	public static void incrementNumOrders() {
+		numOrders++;
+	}
+	public static void printTheOrders() {
+		for(String item: theOrders) {
+			System.out.println(item);
+		}
+	}
+	public static void changeMoney(double amt) {
+		money += amt;
 	}
 
 		
