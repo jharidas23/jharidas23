@@ -6,6 +6,7 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -20,7 +21,7 @@ public class BurgeriaMain extends JFrame{
 	//order has been completed and sent out.
 	private static double money;
 	private static int numOrders;
-	private ArrayList<JComponent> completedPatties;
+	private static ArrayList<JComponent> completePatties;
 	
 	public BurgeriaMain() {
 		//making overall panel
@@ -145,8 +146,9 @@ public class BurgeriaMain extends JFrame{
 	public static void changeMoney(double amt) {
 		money += amt;
 	}
-	public static getCompeltedPatties(){
-		return completedPatties;
+	public static ArrayList<JComponent>getCompeltePatties(){
+		return completePatties;
+	}
 
 		
 }
