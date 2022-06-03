@@ -84,7 +84,7 @@ public class CookedPatty extends JComponent implements ActionListener{
 				{
 					if(!donePlacing) {
 						dropped = true;
-						order.add("Patty");
+						assembledItems.add("Patty");
 						donePlacing = true;
 				}
 			}
