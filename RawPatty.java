@@ -20,10 +20,10 @@ public class RawPatty extends JComponent implements ActionListener{
 	private Ellipse2D.Double top;
 	private Ellipse2D.Double bottom;
 	private Rectangle middle;
+	
 	private Timer t;
-	private Cook panel; 
-	private ArrayList<String> order; 
-	private String type; 
+	private Cook cPanel; 
+	private ArrayList<String> assembledItems; 
 	private char screen; 
 	
 	private RawPatty obj = this; 
@@ -33,14 +33,11 @@ public class RawPatty extends JComponent implements ActionListener{
 
 	
 	  
-	public RawPatty(int x, int y, ArrayList<String> playerOrderCombo, char sc, Cook cookPanel){
+	public RawPatty(int x, int y, ArrayList<String> stackedItems, char sc, Cook cookPanel, AssemblePanel aPanel){
+				
+		cPanel = cookPanel;
 		
-		
-		type = "Raw"; 
-		
-		panel = cookPanel;
-		
-		order = playerOrderCombo; 
+		assembledItems = stackedItems; 
 		
 		screen = sc;
 		
@@ -69,7 +66,6 @@ public class RawPatty extends JComponent implements ActionListener{
 
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
 				System.out.println("mouse released");
 				if(screen == 'C')
 				{
@@ -84,17 +80,17 @@ public class RawPatty extends JComponent implements ActionListener{
 					{
 						screen = 'A'; 
 						BurgeriaMain.getCompeltePatties().add(obj); 
-						panel.remove(obj); 
+						cPanel.remove(obj); 
 						System.out.println("item has been removed"); 
-						panel.revalidate(); 
-						panel.repaint(); 
+						cPanel.revalidate(); 
+						cPanel.repaint(); 
 					}
 				}
 				if(screen == 'A')
 				{
 					if(!donePlacing) {
 						dropped = true;
-						order.add("Patty");
+						assembledItems.add("Patty");
 						donePlacing = true;
 					}
 				}
@@ -161,20 +157,19 @@ public class RawPatty extends JComponent implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		panel.add(new CookedPatty(getX(), getY(), panel.getOrder(), 'C', panel)); 
-		ArrayList<JComponent> rp = panel.getArray(); 
+		cPanel.add(new CookedPatty(getX(), getY(), cPanel.getOrder(), 'C', cPanel)); 
+		ArrayList<JComponent> rp = cPanel.getArray(); 
 		int index = rp.indexOf(this); 
-		JComponent r = rp.set(index, new RawPatty(50,450,order,'C', panel)); 
-		panel.remove(r);  
+		JComponent r = rp.set(index, new RawPatty(50,450,order,'C', cPanel)); 
+		cPanel.remove(r);  
 		t.stop();
-		panel.repaint(); 
-		panel.revalidate(); 
+		cPanel.repaint(); 
+		cPanel.revalidate(); 
 	}
 	
-	public String getType()
+	public String getName()
 	{
-		return type; 
+		return "RawPatty"; 
 	}
 	
 }
