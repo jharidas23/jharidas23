@@ -20,6 +20,7 @@ public class BurgeriaMain extends JFrame{
 	//order has been completed and sent out.
 	private static double money;
 	private static int numOrders;
+	private ArrayList<JComponent> completedPatties;
 	
 	public BurgeriaMain() {
 		//making overall panel
@@ -35,6 +36,7 @@ public class BurgeriaMain extends JFrame{
 		theOrders = new ArrayList<String>();
 		money = 5;
 		numOrders = 0;
+		completePatties = new ArrayList<JComponent>();
 
 
 		//making menu
@@ -143,6 +145,8 @@ public class BurgeriaMain extends JFrame{
 	public static void changeMoney(double amt) {
 		money += amt;
 	}
+	public static getCompeltedPatties(){
+		return completedPatties;
 
 		
 }
