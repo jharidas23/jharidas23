@@ -76,36 +76,41 @@ public class OrderPanel extends JPanel{
 			@Override
 			public void actionPerformed(ActionEvent e) 
 			{
-				Orders order = random(); 
-				JOptionPane pane = new JOptionPane();
-				String theOrder = orderofOrders(order);
-				//String theOrder = " # of Patties: " + order.getPatties() + "\nCondiments: " + order.getCondiments();
-				//if(order.getCheese() == true) {
-				//	theOrder += "\nCheese";
-				//}
-				//if(order.getLettuce() == true) {
-				//	theOrder += "\nLettuce";
-				//}
-				//if(order.getTomatoes() == true) {
-				//	theOrder += "\nTomatoes";
-				//}
-				//if(order.getPickles() == true) {
-				//	theOrder += "\nPickles";
-				//}
-				//if(order.getOnions() == true) {
-				//	theOrder += "\nOnions";
-				//}
-				final String menu = theOrder;
-				ticketInformation.add(theOrder);
-				//String theOrder = " # of Patties: " + order.getPatties() + "\nCondiments: " + order.getCondiments() + "\nCheese: " + order.getCheese() +  "\nLettuce: " + order.getLettuce() + "\nTomatoes: " + order.getTomatoes() + "\nPickles: " + order.getPickles() + "\nOnions: " + order.getOnions();
-				int result = JOptionPane.showInternalConfirmDialog(null,theOrder, "Take Order", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);;
-				//if(r8esult == JOptionPane.OK_OPTION) {
-				//	drawTicket();
-				//}
-				// } else if (result == JOptionPane.CANCEL_OPTION){
-				//	 label.append("");
-				// }
-		
+				if(BurgeriaMain.getNumOrders()<=8) {
+					Orders order = random(); 
+					JOptionPane pane = new JOptionPane();
+					String theOrder = orderofOrders(order);
+					
+					BurgeriaMain.incrementNumOrders();
+					//String theOrder = " # of Patties: " + order.getPatties() + "\nCondiments: " + order.getCondiments();
+					//if(order.getCheese() == true) {
+					//	theOrder += "\nCheese";
+					//}
+					//if(order.getLettuce() == true) {
+					//	theOrder += "\nLettuce";
+					//}
+					//if(order.getTomatoes() == true) {
+					//	theOrder += "\nTomatoes";
+					//}
+					//if(order.getPickles() == true) {
+					//	theOrder += "\nPickles";
+					//}
+					//if(order.getOnions() == true) {
+					//	theOrder += "\nOnions";
+					//}
+					final String menu = theOrder;
+					ticketInformation.add(theOrder);
+					//String theOrder = " # of Patties: " + order.getPatties() + "\nCondiments: " + order.getCondiments() + "\nCheese: " + order.getCheese() +  "\nLettuce: " + order.getLettuce() + "\nTomatoes: " + order.getTomatoes() + "\nPickles: " + order.getPickles() + "\nOnions: " + order.getOnions();
+					int result = JOptionPane.showInternalConfirmDialog(null,theOrder, "Take Order", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);;
+					//if(r8esult == JOptionPane.OK_OPTION) {
+					//	drawTicket();
+					//}
+					// } else if (result == JOptionPane.CANCEL_OPTION){
+					//	 label.append("");
+					// }
+			
+				}
+				
 			}
 			
 		});
@@ -228,7 +233,7 @@ public class OrderPanel extends JPanel{
 		ArrayList <String> theOrder = new ArrayList <String>(); 
 		theOrder.add(order.getCondiments()); 
 		for(int i = 0; i < order.getPatties(); i ++) {
-			theOrder.add("Patties");
+			theOrder.add("Patty");
 		}
 		if(order.getCheese() == true) {
 			theOrder.add("Cheese");
