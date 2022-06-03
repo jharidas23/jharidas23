@@ -23,7 +23,7 @@ public class BurntPatty extends JComponent{
 	
 	private BurntPatty obj = this;
 	  
-	public BurntPatty(int x, int y, ArrayList<JComponent> stackedItems, char screen){
+	public BurntPatty(int x, int y, ArrayList<String> stackedItems, char screen, AssemblePanel aPanel){
 		
 		setLocation(x,y);
 		setSize(101, 61);
@@ -82,7 +82,7 @@ public class BurntPatty extends JComponent{
 
 				if(!donePlacing && screen == 'a') {
 					dropped = true;
-					stackedItems.add(obj);
+					stackedItems.add("Patty");
 					donePlacing = true;
 				}				
 			
