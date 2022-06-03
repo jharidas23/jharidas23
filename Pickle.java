@@ -65,7 +65,7 @@ public class Pickle extends JComponent{
 				int mouseX = p.x;
 				int mouseY = p.y;
 				
-				setLocation(mouseX-100,mouseY-75);
+				setLocation(mouseX-85,mouseY-85);
 				
 			}
 
@@ -140,6 +140,10 @@ public class Pickle extends JComponent{
 		g2.fill(topLeft);
 		g2.fill(topRight);
 		
+	}
+	
+	public String getName() {
+		return "Pickle";
 	}
 	
 	
