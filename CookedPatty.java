@@ -21,10 +21,10 @@ public class CookedPatty extends JComponent implements ActionListener{
 	private Ellipse2D.Double top;
 	private Ellipse2D.Double bottom;
 	private Rectangle middle;
+	
 	private Timer t;
-	private Cook panel; 
-	private ArrayList<String> order; 
-	private String type;  
+	private Cook cPanel; 
+	private ArrayList<String> assembledItems; 
 	private char screen; 
 	
 	private CookedPatty obj = this; 
@@ -32,13 +32,11 @@ public class CookedPatty extends JComponent implements ActionListener{
 	private boolean dropped = false;
 	private boolean donePlacing = false;
 	
-	public CookedPatty(int x, int y, ArrayList<String> playerOrderCombo, char sc, Cook cookPanel){
+	public CookedPatty(int x, int y, ArrayList<String> stackedItems, char sc, Cook cookPanel, AssemblePanel aPanel){
 		
-		type = "Cooked"; 
+		cPanel = cookPanel;
 		
-		panel = cookPanel;
-		
-		order = playerOrderCombo; 
+		assembledItems = stackedItems; 
 		
 		screen = sc; 
 		
@@ -69,7 +67,6 @@ public class CookedPatty extends JComponent implements ActionListener{
 
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
 				System.out.println("mouse released");
 				if(screen == 'C')
 				{
@@ -77,10 +74,10 @@ public class CookedPatty extends JComponent implements ActionListener{
 					{
 						screen = 'A'; 
 						BurgeriaMain.getCompeltePatties().add(obj); 
-						panel.remove(obj);
+						cPanel.remove(obj);
 						System.out.println("item has been removed"); 
-						panel.revalidate(); 
-						panel.repaint(); 
+						cPanel.revalidate(); 
+						cPanel.repaint(); 
 					}
 				}
 				if(screen == 'A')
@@ -155,16 +152,15 @@ public class CookedPatty extends JComponent implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-		panel.add(new BurntPatty(getX(), getY(), panel.getOrder(), 'C', panel)); 
-		panel.remove(this);  
+		cPanel.add(new BurntPatty(getX(), getY(), cPanel.getOrder(), 'C', cPanel)); 
+		cPanel.remove(this);  
 		t.stop();
-		panel.repaint(); 
-		panel.revalidate(); 
+		cPanel.repaint(); 
+		cPanel.revalidate(); 
 	}
 	
-	public String getType()
-	{
-		return type; 
+	public String getName(){
+		return "CookedPatty";
 	}
 
 }
