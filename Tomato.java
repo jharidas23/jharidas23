@@ -10,6 +10,7 @@ import java.awt.event.MouseMotionListener;
 import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -24,8 +25,13 @@ public class Tomato extends JComponent{
 	private Ellipse2D.Double top;
 	private Ellipse2D.Double bottom;
 	private Rectangle middle;
+	
+	private boolean dropped = false;
+	private boolean donePlacing = false;
+	
+	private Tomato obj = this;
 	  
-	public Tomato(int x, int y){
+	public Tomato(int x, int y, ArrayList<String> stackedItems, AssemblePanel panel){
 		
 		setLocation(x,y);
 		setSize(101, 61);
@@ -39,16 +45,63 @@ public class Tomato extends JComponent{
 
 			@Override
 			public void mouseDragged(MouseEvent e) {
-				Point p = MouseInfo.getPointerInfo().getLocation();
-				int mouseX = p.x;
-				int mouseY = p.y;
-				
-				setLocation(mouseX-100,mouseY-85);
+				if(!dropped) {
+					Point p = MouseInfo.getPointerInfo().getLocation();
+					int mouseX = p.x;
+					int mouseY = p.y;
+					
+					setLocation(mouseX-90,mouseY-80);
+				}
 				
 			}
 
 			@Override
 			public void mouseMoved(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
+		
+		addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+
+				panel.reorder(obj);
+				
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+
+				if(!donePlacing) {
+					dropped = true;
+					stackedItems.add("Tomato");
+					donePlacing = true;
+					
+					//adjusting money
+					BurgeriaMain.changeMoney(-0.25);
+					panel.updateMoney();
+					
+				}				
+			
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
 				// TODO Auto-generated method stub
 				
 			}
@@ -72,23 +125,11 @@ public class Tomato extends JComponent{
 		
 	}
 	
-	public static void main(String[] args) {
-		JFrame frame = new JFrame();
-		frame.setBounds(10,10,1000,600);
-		
-		JLayeredPane panel = new JLayeredPane();
-		
-		
-		
-		
-		Tomato tomato = new Tomato(450,400);
-		panel.add(tomato, 1);
-		
-		frame.add(panel);
-		
-		frame.setVisible(true);
-		frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
+	public String getName() {
+		return("Tomato");
 	}
+	
+	
 }
 
 

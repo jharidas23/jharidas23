@@ -4,39 +4,88 @@ import java.awt.Graphics2D;
 import java.awt.MouseInfo;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.geom.Ellipse2D;
+import java.util.ArrayList;
 
 import javax.swing.JComponent;
 
 public class TopBun extends JComponent{
 
 	private Ellipse2D.Double bun;
-	private Ellipse2D.Double seed1;
-	private Ellipse2D.Double seed2;
-	private Ellipse2D.Double seed3;
 	
-	public TopBun(int x, int y) {
+	private boolean dropped = false;
+	private boolean donePlacing = false;
+	
+	private TopBun obj = this;
+	
+	public TopBun(int x, int y, ArrayList<String> stackedItems, AssemblePanel panel) {
 		setLocation(x,y);
 		setSize(101, 100);
 		
 		bun = new Ellipse2D.Double(0,70,100,60);
-		seed1 = new Ellipse2D.Double(20,40,10,5);
 		
 		addMouseMotionListener(new MouseMotionListener() {
 
 			@Override
 			public void mouseDragged(MouseEvent e) {
-				Point p = MouseInfo.getPointerInfo().getLocation();
-				int mouseX = p.x;
-				int mouseY = p.y;
-				
-				setLocation(mouseX-100,mouseY-140);
+				if(!dropped) {
+					Point p = MouseInfo.getPointerInfo().getLocation();
+					int mouseX = p.x;
+					int mouseY = p.y;
+					
+					setLocation(mouseX-85,mouseY-160);
+				}
 				
 			}
 
 			@Override
 			public void mouseMoved(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
+		
+		addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				
+				panel.reorder(obj);
+				
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+
+				if(!donePlacing) {
+					dropped = true;
+					stackedItems.add("TopBun");
+					donePlacing = true;
+					
+					//adjusting money
+					BurgeriaMain.changeMoney(-0.40);
+					panel.updateMoney();
+				}				
+			
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
 				// TODO Auto-generated method stub
 				
 			}
@@ -50,11 +99,11 @@ public class TopBun extends JComponent{
 		g2.setColor(new Color(255,204,153));
 		g2.fill(bun);
 		
-		g2.setColor(new Color(240,240,224));
-		g2.rotate(45);
-		g2.fill(seed1);
 		
 		
-		
+	}
+	
+	public String getName() {
+		return("TopBun");
 	}
 }
