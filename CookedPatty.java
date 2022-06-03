@@ -23,7 +23,7 @@ public class CookedPatty extends JComponent{
 	
 	private CookedPatty obj = this;
 	
-	public CookedPatty(int x, int y, ArrayList<JComponent> stackedItems, char screen){
+	public CookedPatty(int x, int y, ArrayList<String> stackedItems, char screen, AssemblePanel aPanel){
 		
 		setLocation(x,y);
 		setSize(101, 61);
@@ -82,8 +82,9 @@ public class CookedPatty extends JComponent{
 
 				if(!donePlacing && screen == 'a') {
 					dropped = true;
-					stackedItems.add(obj);
+					stackedItems.add("Patty");
 					donePlacing = true;
+					
 				}				
 			
 			}
