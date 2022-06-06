@@ -17,6 +17,7 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -33,34 +34,15 @@ public class OrderPanel extends JPanel{
 	private Rectangle wireTop; 
 	private Rectangle wireMiddle; 
 	private Rectangle wireBottom; 
-	//private Rectangle ticket; 
 	private Ellipse2D.Double ticketCircle; 
 	
 	
-	public OrderPanel(ArrayList <String> ticketInformation, ArrayList <String> price) {
+	public OrderPanel(ArrayList <Orders> ticketInformation) {
 		
 		setLayout(null); 
 		
 		drawBackground(); 
 		
-		//JLabel picLabel = null; 
-		
-		//try {
-		//	BufferedImage myPic3c bture = ImageIO.read(new File("Order Station.png"));
-		//	myPicture = BurgeriaMain.scale(myPicture, 800, 600); 
-		//	picLabel = new JLabel (new ImageIcon(myPicture));
-		//	add(picLabel);
-		//catch (Exception e) {}
-		
-		//final JTextArea label  = new JTextArea(16, 58);
-		//label.setLocation(300, 300);
-		//label.setEditable(false); // set textArea non-editable
-		//JScrollPane scroll = new JScrollPane(label);
-		//scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		
-		
-		
-		//picLabel.setBounds(0,0,800,600);
 		
 		JLabel cheeseLabel = new JLabel("Cheese: ");
 		cheeseLabel.setLocation(100, 475);
@@ -78,34 +60,13 @@ public class OrderPanel extends JPanel{
 			{
 				Orders order = random(); 
 				JOptionPane pane = new JOptionPane();
-				String theOrder = order.getTicketNumber() + "\n" + orderofOrders(order, ticketInformation) + "\nPrice: $" + order.getPrice();
-				price.add(order.getTicketNumber() + "," + order.getPrice()); 
-				//String theOrder = " # of Patties: " + order.getPatties() + "\nCondiments: " + order.getCondiments();
-				//if(order.getCheese() == true) {
-				//	theOrder += "\nCheese";
-				//}
-				//if(order.getLettuce() == true) {
-				//	theOrder += "\nLettuce";
-				//}
-				//if(order.getTomatoes() == true) {
-				//	theOrder += "\nTomatoes";
-				//}
-				//if(order.getPickles() == true) {
-				//	theOrder += "\nPickles";
-				//}
-				//if(order.getOnions() == true) {
-				//	theOrder += "\nOnions";
-				//}
+				ticketInformation.add(order);
+				String theOrder = order.getTicketNumber() + "\n" + orderofOrders(order) + "\nPrice: $" + order.getPrice();
 				final String menu = theOrder;
-				//String theOrder = " # of Patties: " + order.getPatties() + "\nCondiments: " + order.getCondiments() + "\nCheese: " + order.getCheese() +  "\nLettuce: " + order.getLettuce() + "\nTomatoes: " + order.getTomatoes() + "\nPickles: " + order.getPickles() + "\nOnions: " + order.getOnions();
-				int result = JOptionPane.showInternalConfirmDialog(null,theOrder, "Take Order", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);;
-				//if(r8esult == JOptionPane.OK_OPTION) {
-				//	drawTicket();
-				//}
-				// } else if (result == JOptionPane.CANCEL_OPTION){
-				//	 label.append("");
-				// }
-		
+				final JOptionPane optionPane = new JOptionPane(theOrder); 
+				final JDialog d = optionPane.createDialog((JFrame) null, "Order"); 
+				d.setLocation(1000,100);
+				d.setVisible(true);
 			}
 			
 		});
@@ -125,8 +86,6 @@ public class OrderPanel extends JPanel{
 		wireMiddle = new Rectangle(0, 12, 1200, 2);
 		wireBottom = new Rectangle(0,14,1200,3);
 		
-		//ticket = new Rectangle(625, 70, 250, 400);
-		
 		orderButton = new Rectangle(30, 475, 100, 50);
 		ticketCircle = new Ellipse2D.Double(1000, -20, 200, 200); 
 		
@@ -134,10 +93,10 @@ public class OrderPanel extends JPanel{
 	public void paintComponent (Graphics g) {
 		Graphics2D g2 = (Graphics2D) g;
 		
-		g2.setColor(Color.LIGHT_GRAY); //blue
+		g2.setColor(Color.LIGHT_GRAY); 
 		g2.fill(wall);
 		
-		g2.setColor(Color.GREEN); //grey
+		g2.setColor(Color.GREEN); 
 		g2.fill(counter);
 		
 		g2.setColor(new Color(192, 192, 192));
@@ -145,9 +104,6 @@ public class OrderPanel extends JPanel{
 		g2.setColor(Color.BLACK);
 		g2.fill(wireTop);
 		g2.fill(wireBottom);
-	
-		//g2.setColor(Color.WHITE);
-		//g2.fill(ticket);
 		
 		g2.setColor(Color.RED);
 		g2.fill(orderButton);
@@ -162,9 +118,9 @@ public class OrderPanel extends JPanel{
 		JFrame myFrame = new JFrame ("Order"); 
 		myFrame.setBounds(50,50,1200,600); 
 		
-		ArrayList <String > orders = new ArrayList <String>();
+		ArrayList <Orders > orders = new ArrayList <Orders>();
 		ArrayList <String > price = new ArrayList<String>(); 
-		JPanel panel = new OrderPanel(orders, price); 
+		JPanel panel = new OrderPanel(orders); 
 		myFrame.add(panel);
 	
 	
@@ -225,9 +181,8 @@ public class OrderPanel extends JPanel{
 		return newOrder; 
 	}
 	
-	public static String orderofOrders(Orders order, ArrayList <String> ticketInformation) {
+	public static String orderofOrders(Orders order) {
 		ArrayList <String> theOrder = new ArrayList <String>(); 
-		String complete = order.getTicketNumber() + ","; 
 		
 		theOrder.add(order.getCondiments()); 
 		for(int i = 0; i < order.getPatties(); i ++) {
@@ -253,14 +208,10 @@ public class OrderPanel extends JPanel{
 		for(int i = 0; i < order.getTotal(); i++) {
 			int random = (int) (Math.random())*theOrder.size(); 
 			done += theOrder.get(random) + "\n";
-			complete += theOrder.get(random) + ",";
 			theOrder.remove(random);
 		} 
 		done += "Bottom Bun";
-		complete += "Bottom Bun"; 
-		ticketInformation.add(complete);
-		return done; 
-		
+		return done;
 	}
 	
 
