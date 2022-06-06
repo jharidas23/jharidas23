@@ -16,8 +16,7 @@ import javax.swing.SwingConstants;
 
 public class BurgeriaMain extends JFrame{
 	
-	private static ArrayList <String> theOrders;
-	private static ArrayList <String> price; 
+	private static ArrayList <Orders> theOrders;
 	private ArrayList<Boolean> completedOrders;//booleans appear in same order as theOrders and is true if
 	//order has been completed and sent out.
 	private static double money;
@@ -66,7 +65,7 @@ public class BurgeriaMain extends JFrame{
 
 			
 		//add each panel to main panel
-			OrderPanel orderPanel = new OrderPanel(theOrders, price);
+			OrderPanel orderPanel = new OrderPanel(theOrders);
 			BurgeriaMainPanel.add(orderPanel, "Order Panel");
 //			
 			AssemblePanel assemblePanel = new AssemblePanel(theOrders);
@@ -129,7 +128,7 @@ public class BurgeriaMain extends JFrame{
 		new BurgeriaMain();
 	}
 	
-	public static ArrayList<String> getTheOrders(){
+	public static ArrayList<Orders> getTheOrders(){
 		return theOrders;
 	}
 	public static double getMoney() {
