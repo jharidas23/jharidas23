@@ -69,11 +69,13 @@ public class BurgeriaMain extends JFrame{
 			OrderPanel orderPanel = new OrderPanel(theOrders, price);
 			BurgeriaMainPanel.add(orderPanel, "Order Panel");
 //			
-//			CookPanel cookPanel = new CookPanel(/*parameters*/);
-//			BurgeriaMainPanel.add(cookPanel, "Cook Panel");
-//			
 			AssemblePanel assemblePanel = new AssemblePanel(theOrders);
 			BurgeriaMainPanel.add(assemblePanel, "Assemble Panel");
+		
+//			CookPanel cookPanel = new CookPanel(assemblePanel);
+//			BurgeriaMainPanel.add(cookPanel, "Cook Panel");
+//			
+			
 //			
 			
 			
