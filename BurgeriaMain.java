@@ -153,22 +153,22 @@ public class BurgeriaMain extends JFrame{
 	
 	public static double getPrice(int i) {
 		double price = 0.50 + 0.80; //the buns and condiments (all orders contain condiments) 
-		if(assembledBurger.get(i).contains("Cheese")) {
+		if(theOrders.get(i).contains("Cheese")) {
 			price += 0.50; 
 		}
-		if(assembledBurger.get(i).contains("Tomato")) {
+		if(theOrders.get(i).contains("Tomato")) {
 			price += 0.25; 
 		}
-		if(assembledBurger.get(i).contains("Pickles")) {
+		if(theOrders.get(i).contains("Pickles")) {
 			price += 0.25; 
 		}
-		if(assembledBurger.get(i).contains("Lettuce")) {
+		if(theOrders.get(i).contains("Lettuce")) {
 			price += 0.25; 
 		}
-		if(assembledBurger.get(i).contains("Onion")) {
+		if(theOrders.get(i).contains("Onion")) {
 			price += 0.25; 
 		}
-		int countofPatties = assembledBurger.get(i).split("Patties").length-1; 
+		int countofPatties = theOrders.get(i).split("Patties").length-1; 
 		price += countofPatties; 
 		return price; 
 	}
