@@ -1,6 +1,12 @@
+import java.awt.geom.Rectangle2D.Double;
 
 public class Orders {
 	
+	//patty $1 
+	//veggies $0.25 
+	//cheese $0.50 
+	//sauce $50 
+	//buns $0.80
 	private int patties; 
 	private String condiments; 
 	private boolean cheese; 
@@ -9,15 +15,34 @@ public class Orders {
 	private boolean tomatoes; 
 	private boolean onions;
 	private static int ticketNumber = 0; 
+	private double price; 
 	
 	public Orders(int p, String c, boolean ch, boolean l, boolean pi, boolean t, boolean o) {
 		patties = p; 
-		condiments = c; 
+		price += p; 
+		condiments = c;
+		price += 0.5; 
 		cheese = ch; 
+		if(cheese) {
+			price += 0.5; 
+		}
 		lettuce = l; 
+		if(lettuce) {
+			price += 0.25; 
+		}
 		pickles = pi; 
+		if(pickles) {
+			price += 0.25; 
+		}
 		tomatoes = t; 
+		if(tomatoes) {
+			price += 0.25; 
+		}
 		onions = o; 
+		if(onions) {
+			price += 0.25; 
+		}
+		price += 0.80; 
 		ticketNumber ++; 
 	}
 	
@@ -71,6 +96,9 @@ public class Orders {
 		}
 		return total;
 	}
-	
+	public double getPrice() {
+		return price; 
+	}
 
 }
+
