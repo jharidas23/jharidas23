@@ -145,22 +145,21 @@ public class AssemblePanel extends JLayeredPane{
 	}
 	
 	public void drawPatties(ArrayList<JComponent> completePatties) {
+		int yLevel = 490;
 		for(JComponent patty: completePatties) {
 			if(patty.getName().equals("BurntPatty")) {
-				add(new BurntPatty(226,493, assembledBurger, assembledObjs, 'a', this));
+				add(new BurntPatty(226,yLevel, assembledBurger, assembledObjs, 'a', this));
+				yLevel -= 50;
+			}
+			if(patty.getName().equals("CookedPatty")) {
+				add(new BurntPatty(226,yLevel, assembledBurger, assembledObjs, 'a', this));
+				yLevel -= 50;
+			}
+			if(patty.getName().equals("BurntPatty")) {
+				add(new BurntPatty(226,yLevel, assembledBurger, assembledObjs, 'a', this));
+				yLevel -= 50;
 			}
 		}
-//		if(pattyState.equals("Burnt")) {
-//			add(new BurntPatty(226,493, assembledBurger, 'a', this));
-//			burnt = true;
-//		}
-//		if(pattyState.equals("Cooked")) {
-//			add(new CookedPatty(226,493, assembledBurger, 'a', this));
-//		}
-//		if(pattyState.equals("Raw")) {
-//			add(new RawPatty(226,493, assembledBurger, 'a', this));
-//			raw = true;
-//		}
 	}
 	
 	public void reorder(JComponent item) {
@@ -230,6 +229,10 @@ public class AssemblePanel extends JLayeredPane{
 	
 	public void addToPrice(double amt) {
 		price+=amt;
+	}
+	
+	public ArrayList<JComponent> getAssembledObjs(){
+		return assembledObjs;
 	}
 	
 	public int getYValUnderneath(int x) {
