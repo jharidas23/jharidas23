@@ -41,10 +41,10 @@ public class Cook extends JPanel
 		
 		rp = new ArrayList<JComponent>(); 
 		
-		rp.add(new RawPatty(50,550,order,'C', cookPanel, assemblePanel));
-		rp.add(new RawPatty(50,520,order,'C', cookPanel, assemblePanel)); 
-		rp.add(new RawPatty(50,490,order,'C', cookPanel, assemblePanel));
-		rp.add(new RawPatty(50,460,order,'C', cookPanel, assemblePanel)); 
+		rp.add(new RawPatty(50,550,order, BurgeriaMain.getAssemblePanel().getAssembledObjs(), 'C', cookPanel, assemblePanel));
+		rp.add(new RawPatty(50,520,order,BurgeriaMain.getAssemblePanel().getAssembledObjs(),'C', cookPanel, assemblePanel)); 
+		rp.add(new RawPatty(50,490,order,BurgeriaMain.getAssemblePanel().getAssembledObjs(), 'C', cookPanel, assemblePanel));
+		rp.add(new RawPatty(50,460,order,BurgeriaMain.getAssemblePanel().getAssembledObjs(), 'C', cookPanel, assemblePanel)); 
 		
 		for(int i = 0; i<rp.size(); i++)
 		{
