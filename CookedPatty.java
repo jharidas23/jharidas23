@@ -26,19 +26,22 @@ public class CookedPatty extends JComponent implements ActionListener{
 	private Cook cPanel; 
 	private ArrayList<String> assembledItems; 
 	private char screen; 
+	private AssemblePanel aPanel; 
 	
 	private CookedPatty obj = this; 
 	
 	private boolean dropped = false;
 	private boolean donePlacing = false;
 	
-	public CookedPatty(int x, int y, ArrayList<String> stackedItems, char sc, Cook cookPanel, AssemblePanel aPanel){
+	public CookedPatty(int x, int y, ArrayList<String> stackedItems, char sc, Cook cookPanel, AssemblePanel assemblePanel){
 		
 		cPanel = cookPanel;
 		
 		assembledItems = stackedItems; 
 		
 		screen = sc; 
+		
+		aPanel = assemblePanel; 
 		
 		setLocation(x,y);
 		setSize(101, 61);
@@ -72,12 +75,35 @@ public class CookedPatty extends JComponent implements ActionListener{
 				{
 					if((getX()>1000 && getX()<1150) && (getY()>510 && getY()<585))
 					{
-						screen = 'A'; 
-						BurgeriaMain.getCompeltePatties().add(obj); 
-						cPanel.remove(obj);
+						//BurgeriaMain.getCompletePatties().add(obj); 
+						BurgeriaMain.addCompletePatty(obj); 
+						cPanel.remove(obj); 
+						t.stop(); 
 						System.out.println("item has been removed"); 
+						screen = 'A'; 
 						cPanel.revalidate(); 
+						cPanel.repaint();
+					}
+					if((getX()>50 && getX()<200) && (getY()>155 && getY()<230)) 
+					{
+						t.stop(); 
+						ArrayList<JComponent> rp = cPanel.getArray(); 
+						int index = rp.indexOf(obj);
+						int y = 0; 
+						if(index == 0)
+							y = 550; 
+						else if(index == 1)
+							y = 520; 
+						else if(index == 2)
+							y = 490; 
+						else if(index == 3)
+							y = 460; 
+						JComponent r = rp.set(index, new RawPatty(50,y,cPanel.getOrder(),'C', cPanel, aPanel)); 
+						cPanel.remove(r);  
+						cPanel.add(rp.get(index));   
 						cPanel.repaint(); 
+						cPanel.revalidate();
+						
 					}
 				}
 				if(screen == 'A')
@@ -152,9 +178,12 @@ public class CookedPatty extends JComponent implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-		cPanel.add(new BurntPatty(getX(), getY(), cPanel.getOrder(), 'C', cPanel)); 
-		cPanel.remove(this);  
+		ArrayList<JComponent> rp = cPanel.getArray(); 
+		int index = rp.indexOf(obj);
+		JComponent r = rp.set(index, new BurntPatty(getX(), getY(), cPanel.getOrder(), 'C', cPanel, aPanel)); 
+		cPanel.remove(r); 
 		t.stop();
+		cPanel.add(rp.get(index)); 
 		cPanel.repaint(); 
 		cPanel.revalidate(); 
 	}
