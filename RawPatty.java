@@ -15,9 +15,8 @@ import java.util.ArrayList;
 import javax.swing.JComponent;
 import javax.swing.Timer;
 
-public class CookedPatty extends JComponent implements ActionListener{
+public class RawPatty extends JComponent implements ActionListener{
 	
-
 	private Ellipse2D.Double top;
 	private Ellipse2D.Double bottom;
 	private Rectangle middle;
@@ -26,20 +25,22 @@ public class CookedPatty extends JComponent implements ActionListener{
 	private Cook cPanel; 
 	private ArrayList<String> assembledItems; 
 	private char screen; 
-	private AssemblePanel aPanel; 
+	private AssemblePanel aPanel;
 	
-	private CookedPatty obj = this; 
+	private RawPatty obj = this; 
 	
 	private boolean dropped = false;
 	private boolean donePlacing = false;
+
 	
-	public CookedPatty(int x, int y, ArrayList<String> stackedItems, char sc, Cook cookPanel, AssemblePanel assemblePanel){
-		
+	  
+	public RawPatty(int x, int y, ArrayList<String> stackedItems, char sc, Cook cookPanel, AssemblePanel assemblePanel){
+				
 		cPanel = cookPanel;
 		
 		assembledItems = stackedItems; 
 		
-		screen = sc; 
+		screen = sc;
 		
 		aPanel = assemblePanel; 
 		
@@ -47,8 +48,6 @@ public class CookedPatty extends JComponent implements ActionListener{
 		setSize(101, 61);
 		
 		t = new Timer(5000,this); 
-		
-		t.start(); 
 		
 		bottom = new Ellipse2D.Double(0,15,100,15);
 		middle = new Rectangle(0,10,100,15);
@@ -73,6 +72,13 @@ public class CookedPatty extends JComponent implements ActionListener{
 				System.out.println("mouse released");
 				if(screen == 'C')
 				{
+					System.out.println("cook screen"); 
+					if((getX()>250 && getX()<950)&&(getY()>155 && getY()<703))
+					{
+						System.out.println("inside stove"); 
+						t.start(); 
+						System.out.println("timer started"); 
+					}
 					if((getX()>1000 && getX()<1150) && (getY()>510 && getY()<585))
 					{
 						//BurgeriaMain.getCompletePatties().add(obj); 
@@ -82,14 +88,14 @@ public class CookedPatty extends JComponent implements ActionListener{
 						System.out.println("item has been removed"); 
 						screen = 'A'; 
 						cPanel.revalidate(); 
-						cPanel.repaint();
+						cPanel.repaint(); 
 					}
 					if((getX()>50 && getX()<200) && (getY()>155 && getY()<230)) 
 					{
-						t.stop(); 
 						ArrayList<JComponent> rp = cPanel.getArray(); 
+						t.stop(); 
 						int index = rp.indexOf(obj);
-						int y = 0; 
+						int y = 0;
 						if(index == 0)
 							y = 550; 
 						else if(index == 1)
@@ -112,9 +118,9 @@ public class CookedPatty extends JComponent implements ActionListener{
 						dropped = true;
 						assembledItems.add("Patty");
 						donePlacing = true;
+					}
 				}
 			}
-		}
 
 			@Override
 			public void mouseEntered(MouseEvent e) {
@@ -164,32 +170,34 @@ public class CookedPatty extends JComponent implements ActionListener{
 	public void paintComponent(Graphics g) {
 		Graphics2D g2 = (Graphics2D) g;
 		
-		g2.setColor(new Color(102,51,0));
+		g2.setColor(new Color(255,102,102));
 		g2.fill(bottom);
 		
-		g2.setColor(new Color(102,51,0));
+		g2.setColor(new Color(255,102,102));
 		g2.fill(middle);
 		
-		g2.setColor(new Color(153,76,0));
+		g2.setColor(new Color(255,153,153));
 		g2.fill(top);
 		
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
+	public void actionPerformed(ActionEvent e) { 
 		ArrayList<JComponent> rp = cPanel.getArray(); 
-		int index = rp.indexOf(obj);
-		JComponent r = rp.set(index, new BurntPatty(getX(), getY(), cPanel.getOrder(), 'C', cPanel, aPanel)); 
-		cPanel.remove(r); 
-		t.stop();
+		int index = rp.indexOf(obj); 
+		JComponent r = rp.set(index, new CookedPatty(getX(), getY(), cPanel.getOrder(), 'C', cPanel, aPanel)); 
+		cPanel.remove(r);  
 		cPanel.add(rp.get(index)); 
+		t.stop();
 		cPanel.repaint(); 
 		cPanel.revalidate(); 
 	}
 	
-	public String getName(){
-		return "CookedPatty";
+	public String getName()
+	{
+		return "RawPatty"; 
 	}
-
+	
 }
+	
+	
