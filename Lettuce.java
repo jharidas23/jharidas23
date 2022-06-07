@@ -27,7 +27,7 @@ public class Lettuce extends JComponent{
 	
 	private Lettuce obj = this;
 	
-	public Lettuce(int x, int y, ArrayList<String> stackedItems, AssemblePanel panel) {
+	public Lettuce(int x, int y, ArrayList<String> stackedItems, ArrayList <JComponent> assembledObjs, AssemblePanel panel) {
 		setLocation(x,y);
 		setSize(115, 115);
 		
@@ -84,6 +84,7 @@ public class Lettuce extends JComponent{
 				if(!donePlacing) {
 					dropped = true;
 					stackedItems.add("Lettuce");
+					assembledObjs.add(obj);
 					donePlacing = true;
 					
 					//adjusting money
