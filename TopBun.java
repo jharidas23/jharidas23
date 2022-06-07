@@ -20,7 +20,7 @@ public class TopBun extends JComponent{
 	
 	private TopBun obj = this;
 	
-	public TopBun(int x, int y, ArrayList<String> stackedItems, AssemblePanel panel) {
+	public TopBun(int x, int y, ArrayList<String> stackedItems, ArrayList <JComponent> assembledObjs, AssemblePanel panel) {
 		setLocation(x,y);
 		setSize(101, 100);
 		
@@ -69,6 +69,7 @@ public class TopBun extends JComponent{
 				if(!donePlacing) {
 					dropped = true;
 					stackedItems.add("TopBun");
+					assembledObjs.add(obj);
 					donePlacing = true;
 					
 					//adjusting money
