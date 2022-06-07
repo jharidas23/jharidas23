@@ -34,7 +34,7 @@ public class BurgeriaMain extends JFrame{
 		setBounds(25,25,1200,650);
 		
 		//initialize fields
-		theOrders = new ArrayList<String>();
+		theOrders = new ArrayList<Orders>();
 		money = 5;
 		numOrders = 0;
 		completePatties = new ArrayList<JComponent>();
@@ -135,15 +135,7 @@ public class BurgeriaMain extends JFrame{
 		return money;
 	}
 	public static int getNumOrders() {
-		return numOrders;
-	}
-	public static void incrementNumOrders() {
-		numOrders++;
-	}
-	public static void printTheOrders() {
-		for(String item: theOrders) {
-			System.out.println(item);
-		}
+		return theOrders.size();
 	}
 	public static void changeMoney(double amt) {
 		money += amt;
