@@ -16,10 +16,7 @@ import javax.swing.SwingConstants;
 
 public class BurgeriaMain extends JFrame{
 	
-	private static ArrayList <String> theOrders;
-	private static ArrayList <String> price; 
-	private ArrayList<Boolean> completedOrders;//booleans appear in same order as theOrders and is true if
-	//order has been completed and sent out.
+	private static ArrayList <Orders> theOrders;
 	private static double money;
 	private static int numOrders;
 	private static ArrayList<JComponent> completePatties;
@@ -35,7 +32,7 @@ public class BurgeriaMain extends JFrame{
 		setBounds(25,25,1200,650);
 		
 		//initialize fields
-		theOrders = new ArrayList<String>();
+		theOrders = new ArrayList<Orders>();
 		money = 5;
 		numOrders = 0;
 		completePatties = new ArrayList<JComponent>();
@@ -66,14 +63,16 @@ public class BurgeriaMain extends JFrame{
 
 			
 		//add each panel to main panel
-			OrderPanel orderPanel = new OrderPanel(theOrders, price);
+			OrderPanel orderPanel = new OrderPanel(theOrders);
 			BurgeriaMainPanel.add(orderPanel, "Order Panel");
 //			
 			AssemblePanel assemblePanel = new AssemblePanel(theOrders);
 			BurgeriaMainPanel.add(assemblePanel, "Assemble Panel");
+		
+//			Cook cookPanel = new Cook(assemblePanel);
+//			BurgeriaMainPanel.add(cookPanel, "Cook Panel");
+//			
 			
-			Cook cookPanel = new Cook(assemblePanel);
-			BurgeriaMainPanel.add(cookPanel, "Cook Panel");
 //			
 			
 			
@@ -104,6 +103,7 @@ public class BurgeriaMain extends JFrame{
 				cl.show(BurgeriaMainPanel, "Assemble Panel");
 				//assemblePanel.add(comp)
 				assemblePanel.addButtons();
+				assemblePanel.drawPatty(completePatties);
 			}
 
 		});
@@ -127,33 +127,43 @@ public class BurgeriaMain extends JFrame{
 		new BurgeriaMain();
 	}
 	
-	public static ArrayList<String> getTheOrders(){
+	public static ArrayList<Orders> getTheOrders(){
 		return theOrders;
 	}
 	public static double getMoney() {
 		return money;
 	}
 	public static int getNumOrders() {
-		return numOrders;
-	}
-	public static void incrementNumOrders() {
-		numOrders++;
-	}
-	public static void printTheOrders() {
-		for(String item: theOrders) {
-			System.out.println(item);
-		}
+		return theOrders.size();
 	}
 	public static void changeMoney(double amt) {
 		money += amt;
 	}
-//	public static ArrayList<JComponent> getCompletePatties(){
-//		return completePatties;
-//	}
-	public static void addCompletePatty(JComponent obj)
-	{
-		completePatties.add(obj); 
+	public static ArrayList<JComponent> getCompletePatties(){
+		return completePatties;
 	}
+	
+	public static double getPrice(int i) {
+		double price = 0.50 + 0.80; //the buns and condiments (all orders contain condiments) 
+		if(theOrders.get(i).getCheese()) {
+			price += 0.50; 
+		}
+		if(theOrders.get(i).getTomatoes()) {
+			price += 0.25; 
+		}
+		if(theOrders.get(i).getPickles()) {
+			price += 0.25; 
+		}
+		if(theOrders.get(i).getLettuce()) {
+			price += 0.25; 
+		}
+		if(theOrders.get(i).getOnions()) {
+			price += 0.25; 
+		}
+		price += theOrders.get(i).getPatties(); 
+		return price; 
+	}
+	
 
 		
 }
