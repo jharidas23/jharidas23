@@ -26,11 +26,14 @@ public class Cook extends JPanel
 	private ArrayList<JComponent> rp; 
 	private ArrayList<String> order; 
 	private Cook cookPanel; 
+	private AssemblePanel assemblePanel; 
 	
-	public Cook()
+	public Cook(AssemblePanel ap)
 	{ 
 		
 		setLayout(null); 
+		
+		assemblePanel = ap; 
 		
 		drawBackground(); 
 		
@@ -38,10 +41,10 @@ public class Cook extends JPanel
 		
 		rp = new ArrayList<JComponent>(); 
 		
-		rp.add(new RawPatty(50,550,order,'C', this));
-		rp.add(new RawPatty(50,520,order,'C', this)); 
-		rp.add(new RawPatty(50,490,order,'C', this));
-		rp.add(new RawPatty(50,460,order,'C', this)); 
+		rp.add(new RawPatty(50,550,order,'C', cookPanel, assemblePanel));
+		rp.add(new RawPatty(50,520,order,'C', cookPanel, assemblePanel)); 
+		rp.add(new RawPatty(50,490,order,'C', cookPanel, assemblePanel));
+		rp.add(new RawPatty(50,460,order,'C', cookPanel, assemblePanel)); 
 		
 		for(int i = 0; i<rp.size(); i++)
 		{
@@ -54,7 +57,11 @@ public class Cook extends JPanel
 		JFrame myFrame = new JFrame ("test"); 
 		myFrame.setBounds(0,0,1200,650);
 		
-		JPanel panel = new Cook(); 
+		ArrayList<String> o = new ArrayList<String>(); 
+		
+		AssemblePanel a = new AssemblePanel(o); 
+		
+		JPanel panel = new Cook(a); 
 		myFrame.add(panel); 
 		
 		myFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
