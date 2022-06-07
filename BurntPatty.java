@@ -23,6 +23,8 @@ public class BurntPatty extends JComponent{
 	private Cook cPanel;
 	private char screen; 
 	
+	private AssemblePanel aPanel; 
+	
 	private ArrayList<String> assembledItems; 
 	
 	private BurntPatty obj = this; 
@@ -30,9 +32,11 @@ public class BurntPatty extends JComponent{
 	private boolean dropped = false;
 	private boolean donePlacing = false;
 	
-	public BurntPatty(int x, int y, ArrayList<String> stackedItems, char sc, Cook cookPanel, AssemblePanel aPanel){
+	public BurntPatty(int x, int y, ArrayList<String> stackedItems, char sc, Cook cookPanel, AssemblePanel assemblePanel){
 		
 		cPanel = cookPanel;
+		
+		aPanel = assemblePanel; 
 		
 		assembledItems = stackedItems; 
 		
@@ -67,12 +71,33 @@ public class BurntPatty extends JComponent{
 				{
 					if((getX()>1000 && getX()<1150) && (getY()>510 && getY()<585))
 					{
-						screen = 'A'; 
-						BurgeriaMain.getCompeltePatties().add(obj); 
-						cPanel.remove(obj);
+						//BurgeriaMain.getCompletePatties().add(obj); 
+						BurgeriaMain.addCompletePatty(obj); 
+						cPanel.remove(obj); 
 						System.out.println("item has been removed"); 
+						screen = 'A'; 
 						cPanel.revalidate(); 
 						cPanel.repaint(); 
+					}
+					if((getX()>50 && getX()<200) && (getY()>155 && getY()<230)) 
+					{
+						ArrayList<JComponent> rp = cPanel.getArray(); 
+						int index = rp.indexOf(obj);
+						int y = 0; 
+						if(index == 0)
+							y = 550; 
+						else if(index == 1)
+							y = 520; 
+						else if(index == 2)
+							y = 490; 
+						else if(index == 3)
+							y = 460; 
+						JComponent r = rp.set(index, new RawPatty(50,y,cPanel.getOrder(),'C', cPanel, aPanel)); 
+						cPanel.remove(r);  
+						cPanel.add(rp.get(index));   
+						cPanel.repaint(); 
+						cPanel.revalidate();
+						
 					}
 				}
 				if(screen == 'A')
