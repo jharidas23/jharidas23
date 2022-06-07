@@ -26,7 +26,7 @@ public class Onion extends JComponent{
 	
 	private Onion obj = this;
 	  
-	public Onion(int x, int y, ArrayList<String> stackedItems, AssemblePanel panel){
+	public Onion(int x, int y, ArrayList<String> stackedItems, ArrayList <JComponent> assembledObjs, AssemblePanel panel){
 		
 		setLocation(x,y);
 		setSize(101, 61);
@@ -81,6 +81,7 @@ public class Onion extends JComponent{
 				if(!donePlacing) {
 					dropped = true;
 					stackedItems.add("Onion");
+					assembledObjs.add(obj);
 					donePlacing = true;
 					
 					//adjusting money
