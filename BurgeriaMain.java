@@ -138,7 +138,7 @@ public class BurgeriaMain extends JFrame{
 	public static void changeMoney(double amt) {
 		money += amt;
 	}
-	public static ArrayList<JComponent>getCompeltePatties(){
+	public static ArrayList<JComponent> getCompletePatties(){
 		return completePatties;
 	}
 	
