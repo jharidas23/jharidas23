@@ -60,7 +60,7 @@ public class BurntPatty extends JComponent{
 			@Override
 			public void mousePressed(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
+				aPanel.reorder(obj);
 			}
 
 			@Override
