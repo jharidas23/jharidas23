@@ -31,7 +31,7 @@ public class Tomato extends JComponent{
 	
 	private Tomato obj = this;
 	  
-	public Tomato(int x, int y, ArrayList<String> stackedItems, AssemblePanel panel){
+	public Tomato(int x, int y, ArrayList<String> stackedItems, ArrayList <JComponent> assembledObjs, AssemblePanel panel){
 		
 		setLocation(x,y);
 		setSize(101, 61);
@@ -84,6 +84,7 @@ public class Tomato extends JComponent{
 				if(!donePlacing) {
 					dropped = true;
 					stackedItems.add("Tomato");
+					assembledObjs.add(obj);
 					donePlacing = true;
 					
 					//adjusting money
