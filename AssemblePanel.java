@@ -41,6 +41,7 @@ public class AssemblePanel extends JLayeredPane{
 	private ArrayList<JButton> finishButtons;
 	
 	private AssemblePanel panel = this;
+	private Cook cookPanel;
 	
 	private boolean burnt;
 	private boolean raw;
@@ -48,7 +49,7 @@ public class AssemblePanel extends JLayeredPane{
 	private double price;
 	
 	
-	public AssemblePanel(ArrayList<Orders> orders, Cook cookPanel){
+	public AssemblePanel(ArrayList<Orders> orders){
 		
 		setLayout(null);
 		
@@ -57,6 +58,8 @@ public class AssemblePanel extends JLayeredPane{
 		assembledBurger = new ArrayList<String>();
 		assembledObjs = new ArrayList<JComponent>();
 		finishButtons = new ArrayList<JButton>();
+		
+		cookPanel = BurgeriaMain.getCookPanel();
 		
 		burnt = false;
 		raw = false;
