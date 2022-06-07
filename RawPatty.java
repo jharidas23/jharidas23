@@ -26,6 +26,7 @@ public class RawPatty extends JComponent implements ActionListener{
 	private ArrayList<String> assembledItems; 
 	private char screen; 
 	private AssemblePanel aPanel;
+	private ArrayList<JComponent> assembledObjs; 
 	
 	private RawPatty obj = this; 
 	
@@ -34,7 +35,7 @@ public class RawPatty extends JComponent implements ActionListener{
 
 	
 	  
-	public RawPatty(int x, int y, ArrayList<String> stackedItems, ArrayList assembledObjs, char sc, Cook cookPanel, AssemblePanel assemblePanel){
+	public RawPatty(int x, int y, ArrayList<String> stackedItems, ArrayList ao, char sc, Cook cookPanel, AssemblePanel assemblePanel){
 				
 		cPanel = cookPanel;
 		
@@ -43,6 +44,8 @@ public class RawPatty extends JComponent implements ActionListener{
 		screen = sc;
 		
 		aPanel = assemblePanel; 
+		
+		assembledObjs = ao; 
 		
 		setLocation(x,y);
 		setSize(101, 61);
@@ -72,6 +75,10 @@ public class RawPatty extends JComponent implements ActionListener{
 				System.out.println("mouse released");
 				if(screen == 'C')
 				{
+					BurgeriaMain.changeMoney(-1.00);
+					cPanel.updateMoney();
+					cPanel.revalidate(); 
+					cPanel.repaint(); 
 					System.out.println("cook screen"); 
 					if((getX()>250 && getX()<950)&&(getY()>155 && getY()<703))
 					{
@@ -81,8 +88,8 @@ public class RawPatty extends JComponent implements ActionListener{
 					}
 					if((getX()>1000 && getX()<1150) && (getY()>510 && getY()<585))
 					{
-						//BurgeriaMain.getCompletePatties().add(obj); 
-						BurgeriaMain.addCompletePatty(obj); 
+						BurgeriaMain.getCompletePatties().add(obj); 
+						//BurgeriaMain.addCompletePatty(obj); 
 						cPanel.remove(obj); 
 						t.stop(); 
 						System.out.println("item has been removed"); 
@@ -186,7 +193,7 @@ public class RawPatty extends JComponent implements ActionListener{
 	public void actionPerformed(ActionEvent e) { 
 		ArrayList<JComponent> rp = cPanel.getArray(); 
 		int index = rp.indexOf(obj); 
-		JComponent r = rp.set(index, new CookedPatty(getX(), getY(), cPanel.getOrder(), 'C', cPanel, aPanel)); 
+		JComponent r = rp.set(index, new CookedPatty(getX(), getY(), cPanel.getOrder(), assembledObjs, 'C', cPanel, aPanel)); 
 		cPanel.remove(r);  
 		cPanel.add(rp.get(index)); 
 		t.stop();
