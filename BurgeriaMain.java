@@ -21,6 +21,9 @@ public class BurgeriaMain extends JFrame{
 	private static int numOrders;
 	private static ArrayList<JComponent> completePatties;
 	
+	private static AssemblePanel assemblePanel;
+	private static Cook cookPanel;
+	
 	public BurgeriaMain() {
 		//making overall panel
 		CardLayout cl = new CardLayout();
@@ -36,6 +39,8 @@ public class BurgeriaMain extends JFrame{
 		money = 5;
 		numOrders = 0;
 		completePatties = new ArrayList<JComponent>();
+		assemblePanel = new AssemblePanel(theOrders);
+		cookPanel = new Cook(theOrders);
 
 
 		//making menu
@@ -66,11 +71,11 @@ public class BurgeriaMain extends JFrame{
 			OrderPanel orderPanel = new OrderPanel(theOrders);
 			BurgeriaMainPanel.add(orderPanel, "Order Panel");
 //			
-			AssemblePanel assemblePanel = new AssemblePanel(theOrders);
+			
+			
 			BurgeriaMainPanel.add(assemblePanel, "Assemble Panel");
 		
-//			Cook cookPanel = new Cook(assemblePanel);
-//			BurgeriaMainPanel.add(cookPanel, "Cook Panel");
+			BurgeriaMainPanel.add(cookPanel, "Cook Panel");
 //			
 			
 //			
@@ -162,6 +167,13 @@ public class BurgeriaMain extends JFrame{
 		}
 		price += theOrders.get(i).getPatties(); 
 		return price; 
+	}
+	
+	public static AssemblePanel getAssemblePanel() {
+		return assemblePanel;
+	}
+	public static Cook getCookPanel() {
+		return cookPanel;
 	}
 	
 
