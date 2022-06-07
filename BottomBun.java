@@ -24,7 +24,7 @@ public class BottomBun extends JComponent{
 	
 	private BottomBun obj = this;
 	  
-	public BottomBun(int x, int y, ArrayList<String> stackedItems, AssemblePanel panel){
+	public BottomBun(int x, int y, ArrayList<String> stackedItems, ArrayList<JComponent> assembledObjs, AssemblePanel panel){
 		
 		setLocation(x,y);
 		setSize(101, 61);
@@ -78,6 +78,7 @@ public class BottomBun extends JComponent{
 				if(!donePlacing) {
 					dropped = true;
 					stackedItems.add("BottomBun");
+					assembledObjs.add(obj);
 					donePlacing = true;
 					
 					//adjusting money
@@ -121,6 +122,10 @@ public class BottomBun extends JComponent{
 	
 	public String getName() {
 		return("BottomBun");
+	}
+	
+	public int getAlteredY() {
+		return getY()+20;
 	}
 	
 }
