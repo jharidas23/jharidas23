@@ -21,7 +21,7 @@ public class Cheese extends JComponent {
 	
 	private Cheese obj = this;
 	  
-	public Cheese(int x, int y, ArrayList<String> assembledBurger, AssemblePanel panel){
+	public Cheese(int x, int y, ArrayList<String> assembledBurger, ArrayList <JComponent> assembledObjs, AssemblePanel panel){
 		
 		setLocation(x,y);
 		setSize(101, 61);
@@ -71,6 +71,7 @@ public class Cheese extends JComponent {
 				if(!donePlacing) {
 					dropped = true;
 					assembledBurger.add("Cheese");
+					assembledObjs.add(obj);
 					donePlacing = true;
 					
 					//adjusting money
