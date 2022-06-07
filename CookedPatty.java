@@ -25,6 +25,7 @@ public class CookedPatty extends JComponent implements ActionListener{
 	private Timer t;
 	private Cook cPanel; 
 	private ArrayList<String> assembledItems; 
+	private ArrayList<JComponent> assembledObjs;
 	private char screen; 
 	private AssemblePanel aPanel; 
 	
@@ -33,11 +34,12 @@ public class CookedPatty extends JComponent implements ActionListener{
 	private boolean dropped = false;
 	private boolean donePlacing = false;
 	
-	public CookedPatty(int x, int y, ArrayList<String> stackedItems, char sc, Cook cookPanel, AssemblePanel assemblePanel){
+	public CookedPatty(int x, int y, ArrayList<String> stackedItems, ArrayList<JComponent> assembledObjs, char sc, Cook cookPanel, AssemblePanel assemblePanel){
 		
 		cPanel = cookPanel;
 		
 		assembledItems = stackedItems; 
+		this.assembledObjs = assembledObjs;
 		
 		screen = sc; 
 		
@@ -98,7 +100,7 @@ public class CookedPatty extends JComponent implements ActionListener{
 							y = 490; 
 						else if(index == 3)
 							y = 460; 
-						JComponent r = rp.set(index, new RawPatty(50,y,cPanel.getOrder(),'C', cPanel, aPanel)); 
+						JComponent r = rp.set(index, new RawPatty(50,y,cPanel.getOrder(), assembledObjs,'C', cPanel, aPanel)); 
 						cPanel.remove(r);  
 						cPanel.add(rp.get(index));   
 						cPanel.repaint(); 
@@ -111,6 +113,7 @@ public class CookedPatty extends JComponent implements ActionListener{
 					if(!donePlacing) {
 						dropped = true;
 						assembledItems.add("Patty");
+						assembledObjs.add(obj);
 						donePlacing = true;
 				}
 			}
@@ -180,7 +183,7 @@ public class CookedPatty extends JComponent implements ActionListener{
 		// TODO Auto-generated method stub
 		ArrayList<JComponent> rp = cPanel.getArray(); 
 		int index = rp.indexOf(obj);
-		JComponent r = rp.set(index, new BurntPatty(getX(), getY(), cPanel.getOrder(), 'C', cPanel, aPanel)); 
+		JComponent r = rp.set(index, new BurntPatty(getX(), getY(), cPanel.getOrder(), assembledObjs, 'C', cPanel, aPanel)); 
 		cPanel.remove(r); 
 		t.stop();
 		cPanel.add(rp.get(index)); 
