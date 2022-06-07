@@ -25,15 +25,15 @@ public class Cook extends JPanel
 	private Ellipse2D.Double next; 
 	private ArrayList<JComponent> rp; 
 	private ArrayList<String> order; 
-	private Cook cookPanel; 
+	private Cook cookPanel = this; 
 	private AssemblePanel assemblePanel; 
 	
-	public Cook(AssemblePanel ap)
+	public Cook(ArrayList<Orders> orders)
 	{ 
 		
 		setLayout(null); 
 		
-		assemblePanel = ap; 
+		assemblePanel = BurgeriaMain.getAssemblePanel(); 
 		
 		drawBackground(); 
 		
@@ -57,11 +57,10 @@ public class Cook extends JPanel
 		JFrame myFrame = new JFrame ("test"); 
 		myFrame.setBounds(0,0,1200,650);
 		
-		ArrayList<String> o = new ArrayList<String>(); 
+		ArrayList<Orders> o = new ArrayList<Orders>(); 
 		
-		AssemblePanel a = new AssemblePanel(o); 
 		
-		JPanel panel = new Cook(a); 
+		JPanel panel = new Cook(o); 
 		myFrame.add(panel); 
 		
 		myFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
