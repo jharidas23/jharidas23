@@ -148,15 +148,15 @@ public class AssemblePanel extends JLayeredPane{
 		int yLevel = 490;
 		for(JComponent patty: completePatties) {
 			if(patty.getName().equals("BurntPatty")) {
-				add(new BurntPatty(226,yLevel, assembledBurger, assembledObjs, 'a', this));
+				add(new BurntPatty(226,yLevel, assembledBurger, assembledObjs, 'a', cookPanel, this));
 				yLevel -= 50;
 			}
 			if(patty.getName().equals("CookedPatty")) {
-				add(new BurntPatty(226,yLevel, assembledBurger, assembledObjs, 'a', this));
+				add(new BurntPatty(226,yLevel, assembledBurger, assembledObjs, 'a', cookPanel, this));
 				yLevel -= 50;
 			}
 			if(patty.getName().equals("BurntPatty")) {
-				add(new BurntPatty(226,yLevel, assembledBurger, assembledObjs, 'a', this));
+				add(new BurntPatty(226,yLevel, assembledBurger, assembledObjs, 'a', cookPanel, this));
 				yLevel -= 50;
 			}
 		}
