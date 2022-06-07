@@ -37,6 +37,7 @@ public class AssemblePanel extends JLayeredPane{
 	private JLabel lblMoney;
 	
 	private ArrayList<String> assembledBurger;
+	private ArrayList<JComponent> assembledObjs;
 	private ArrayList<JButton> finishButtons;
 	
 	private AssemblePanel panel = this;
@@ -47,13 +48,14 @@ public class AssemblePanel extends JLayeredPane{
 	private double price;
 	
 	
-	public AssemblePanel(ArrayList<String> orders){
+	public AssemblePanel(ArrayList<Orders> orders, Cook cookPanel){
 		
 		setLayout(null);
 		
 		drawBackground();
 		
 		assembledBurger = new ArrayList<String>();
+		assembledObjs = new ArrayList<JComponent>();
 		finishButtons = new ArrayList<JButton>();
 		
 		burnt = false;
@@ -62,14 +64,20 @@ public class AssemblePanel extends JLayeredPane{
 		price = 0;
 		
 		for(int i = 0; i<30; i++) {
-			add(new TopBun(10,0, assembledBurger, this));
-			add(new Tomato(10,160, assembledBurger, this));
-			add(new Lettuce(7,213, assembledBurger, this));
-			add(new Cheese(20,457, assembledBurger, this));
-			add(new BottomBun(10,530, assembledBurger, this));
+			add(new TopBun(10,0, assembledBurger, assembledObjs, this));
+			add(new Tomato(10,160, assembledBurger, assembledObjs,this));
+			add(new Lettuce(7,213, assembledBurger, assembledObjs, this));
+			add(new Cheese(20,455, assembledBurger, assembledObjs, this));
+			add(new Onion(15,300, assembledBurger, assembledObjs, this));
+			add(new Pickle(7,385, assembledBurger, assembledObjs, this));
+			add(new BottomBun(10,530, assembledBurger,assembledObjs, this));
+			add(new CondimentBottle(950,480,"Barbeque", assembledBurger, assembledObjs, this));
+			add(new CondimentBottle(900,480,"Mayo", assembledBurger, assembledObjs, this));
+			add(new CondimentBottle(850,480,"Mustard", assembledBurger, assembledObjs, this));
+			add(new CondimentBottle(800,480,"Ketchup", assembledBurger, assembledObjs, this));
+			
+			
 		}
-		
-		//drawPatty(pattyState);
 		
 		//prices
 		JLabel lblTopBun = new JLabel("$0.40");
@@ -133,18 +141,23 @@ public class AssemblePanel extends JLayeredPane{
 		
 	}
 	
-	public void drawPatty(String pattyState) {
-		if(pattyState.equals("Burnt")) {
-			add(new BurntPatty(226,493, assembledBurger, 'a', this));
-			burnt = true;
+	public void drawPatties(ArrayList<JComponent> completePatties) {
+		for(JComponent patty: completePatties) {
+			if(patty.getName().equals("BurntPatty")) {
+				add(new BurntPatty(226,493, assembledBurger, assembledObjs, 'a', this));
+			}
 		}
-		if(pattyState.equals("Cooked")) {
-			add(new CookedPatty(226,493, assembledBurger, 'a', this));
-		}
-		if(pattyState.equals("Raw")) {
-			add(new RawPatty(226,493, assembledBurger, 'a', this));
-			raw = true;
-		}
+//		if(pattyState.equals("Burnt")) {
+//			add(new BurntPatty(226,493, assembledBurger, 'a', this));
+//			burnt = true;
+//		}
+//		if(pattyState.equals("Cooked")) {
+//			add(new CookedPatty(226,493, assembledBurger, 'a', this));
+//		}
+//		if(pattyState.equals("Raw")) {
+//			add(new RawPatty(226,493, assembledBurger, 'a', this));
+//			raw = true;
+//		}
 	}
 	
 	public void reorder(JComponent item) {
@@ -162,7 +175,6 @@ public class AssemblePanel extends JLayeredPane{
 		int buttonYLocation = 200;
 		System.out.println(BurgeriaMain.getNumOrders());
 		for(int i = 1; i<=BurgeriaMain.getNumOrders(); i++) {
-			System.out.println("for loop running");
 			JButton buttonFinish = new JButton("Finish Order "+i);
 			buttonFinish.setBounds(1000,buttonYLocation, 150,40);
 			buttonYLocation += 10+40;
@@ -207,9 +219,6 @@ public class AssemblePanel extends JLayeredPane{
 			});
 		}
 		
-		
-		
-		BurgeriaMain.printTheOrders();
 	}
 	
 	public void updateMoney() {
@@ -218,6 +227,70 @@ public class AssemblePanel extends JLayeredPane{
 	
 	public void addToPrice(double amt) {
 		price+=amt;
+	}
+	
+	public int getYValUnderneath(int x) {
+		int largestY = 400;
+		for(JComponent item: assembledObjs) {
+			if(Math.abs(item.getX()-x)<=100 || Math.abs(item.getX()-x)<=140) {
+				if(getCenterY(item)<largestY) {
+					largestY = getCenterY(item);
+				}
+			}
+		}
+		return largestY;
+	}
+	
+	public int getCenterX(JComponent item) {
+		int newX = 0;
+		if(item.getName().equals("TopBun")) {
+			newX = item.getX()+50;
+		}
+		if(item.getName().equals("Tomato")) {
+			newX = item.getX()+50;
+		}
+		if(item.getName().equals("Lettuce")) {
+			newX = item.getX()+45;
+		}
+		if(item.getName().equals("Onion")) {
+			newX = item.getX()+45;
+		}
+		if(item.getName().equals("Pickle")) {
+			newX = item.getX()+40;
+		}
+		if(item.getName().equals("Cheese")) {
+			newX = item.getX()+40;
+		}
+		if(item.getName().equals("BottomBun")) {
+			newX = item.getX()+50;
+		}
+		return newX;
+	}
+	
+	public int getCenterY(JComponent item) {
+		int newY = 0;
+		if(item.getName().equals("TopBun")) {
+			newY = item.getY()+85;
+		}
+		if(item.getName().equals("Tomato")) {
+			newY = item.getY()+15;
+		}
+		if(item.getName().equals("Lettuce")) {
+			newY = item.getY()+23;
+		}
+		if(item.getName().equals("Onion")) {
+			newY = item.getY()+20;
+		}
+		if(item.getName().equals("Pickle")) {
+			newY = item.getY()+13;
+		}
+		if(item.getName().equals("Cheese")) {
+			newY = item.getY()+15;
+		}
+		if(item.getName().equals("BottomBun")) {
+			newY = item.getY()+15;
+		}
+		return newY;
 	}
 	
 	public void paintComponent(Graphics g) {
