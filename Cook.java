@@ -12,6 +12,7 @@ import java.util.ArrayList;
 
 import javax.swing.JComponent;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
@@ -27,6 +28,9 @@ public class Cook extends JPanel
 	private ArrayList<String> order; 
 	private Cook cookPanel = this; 
 	private AssemblePanel assemblePanel; 
+	private JLabel lblMoney; 
+	private JLabel lblTrash; 
+	private JLabel lblNext; 
 	
 	public Cook(ArrayList<Orders> orders)
 	{ 
@@ -41,30 +45,27 @@ public class Cook extends JPanel
 		
 		rp = new ArrayList<JComponent>(); 
 		
-		rp.add(new RawPatty(50,550,order, BurgeriaMain.getAssemblePanel().getAssembledObjs(), 'C', cookPanel, assemblePanel));
+		rp.add(new RawPatty(50,550,order,BurgeriaMain.getAssemblePanel().getAssembledObjs(),'C', cookPanel, assemblePanel));
 		rp.add(new RawPatty(50,520,order,BurgeriaMain.getAssemblePanel().getAssembledObjs(),'C', cookPanel, assemblePanel)); 
-		rp.add(new RawPatty(50,490,order,BurgeriaMain.getAssemblePanel().getAssembledObjs(), 'C', cookPanel, assemblePanel));
-		rp.add(new RawPatty(50,460,order,BurgeriaMain.getAssemblePanel().getAssembledObjs(), 'C', cookPanel, assemblePanel)); 
+		rp.add(new RawPatty(50,490,order,BurgeriaMain.getAssemblePanel().getAssembledObjs(),'C', cookPanel, assemblePanel));
+		rp.add(new RawPatty(50,460,order,BurgeriaMain.getAssemblePanel().getAssembledObjs(),'C', cookPanel, assemblePanel)); 
 		
 		for(int i = 0; i<rp.size(); i++)
 		{
 			add(rp.get(i)); 
 		}
-	}
-	
-	public static void main(String[] args)
-	{
-		JFrame myFrame = new JFrame ("test"); 
-		myFrame.setBounds(0,0,1200,650);
 		
-		ArrayList<Orders> o = new ArrayList<Orders>(); 
+		lblTrash = new JLabel("Trash");
+		lblTrash.setBounds(112,230,100,20);
+		add(lblTrash);
 		
+		lblNext = new JLabel("Next");
+		lblNext.setBounds(1062,490,100,20);
+		add(lblNext);
 		
-		JPanel panel = new Cook(o); 
-		myFrame.add(panel); 
-		
-		myFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		myFrame.setVisible(true);
+		lblMoney = new JLabel("Balance: $"+BurgeriaMain.getMoney());
+		lblMoney.setBounds(3,15,100,20);
+		add(lblMoney);
 	}
 	
 	public void drawBackground()
@@ -113,5 +114,8 @@ public class Cook extends JPanel
 	public ArrayList<JComponent> getArray()
 	{
 		return rp; 
+	}
+	public void updateMoney() {
+		lblMoney.setText("Balance: $"+BurgeriaMain.getMoney());
 	}
 }
