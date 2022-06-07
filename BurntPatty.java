@@ -32,7 +32,7 @@ public class BurntPatty extends JComponent{
 	private boolean dropped = false;
 	private boolean donePlacing = false;
 	
-	public BurntPatty(int x, int y, ArrayList<String> stackedItems, char sc, Cook cookPanel, AssemblePanel assemblePanel){
+	public BurntPatty(int x, int y, ArrayList<String> stackedItems, ArrayList<JComponent> assembledObjs, char sc, Cook cookPanel, AssemblePanel assemblePanel){
 		
 		cPanel = cookPanel;
 		
@@ -92,7 +92,7 @@ public class BurntPatty extends JComponent{
 							y = 490; 
 						else if(index == 3)
 							y = 460; 
-						JComponent r = rp.set(index, new RawPatty(50,y,cPanel.getOrder(),'C', cPanel, aPanel)); 
+						JComponent r = rp.set(index, new RawPatty(50,y,cPanel.getOrder(),assembledObjs, 'C', cPanel, aPanel)); 
 						cPanel.remove(r);  
 						cPanel.add(rp.get(index));   
 						cPanel.repaint(); 
@@ -105,6 +105,7 @@ public class BurntPatty extends JComponent{
 					if(!donePlacing) {
 						dropped = true;
 						assembledItems.add("Patty");
+						assembledObjs.add(obj);
 						donePlacing = true;
 				}
 			}
