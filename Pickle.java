@@ -39,7 +39,7 @@ public class Pickle extends JComponent{
 	
 	private Pickle obj = this;
 	  
-	public Pickle(int x, int y, ArrayList<String> stackedItems, AssemblePanel panel){
+	public Pickle(int x, int y, ArrayList<String> stackedItems,ArrayList <JComponent> assembledObjs, AssemblePanel panel){
 		
 		setLocation(x,y);
 		setSize(101, 61);
@@ -97,6 +97,7 @@ public class Pickle extends JComponent{
 				if(!donePlacing) {
 					dropped = true;
 					stackedItems.add("Pickle");
+					assembledObjs.add(obj);
 					donePlacing = true;
 					
 					//adjusting money
