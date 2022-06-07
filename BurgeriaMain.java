@@ -17,8 +17,6 @@ import javax.swing.SwingConstants;
 public class BurgeriaMain extends JFrame{
 	
 	private static ArrayList <Orders> theOrders;
-	private ArrayList<Boolean> completedOrders;//booleans appear in same order as theOrders and is true if
-	//order has been completed and sent out.
 	private static double money;
 	private static int numOrders;
 	private static ArrayList<JComponent> completePatties;
