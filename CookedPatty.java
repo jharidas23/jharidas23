@@ -67,7 +67,7 @@ public class CookedPatty extends JComponent implements ActionListener{
 			@Override
 			public void mousePressed(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
+				aPanel.reorder(obj);
 			}
 
 			@Override
