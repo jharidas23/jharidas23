@@ -143,16 +143,22 @@ public class AssemblePanel extends JLayeredPane{
 		int yLevel = 490;
 		for(JComponent patty: completePatties) {
 			if(patty.getName().equals("BurntPatty")) {
-				add(new BurntPatty(226,yLevel, assembledBurger, assembledObjs, 'A', cookPanel, this));
-				yLevel -= 30;
+				BurntPatty p = new BurntPatty(226,yLevel, assembledBurger, assembledObjs, 'A', cookPanel, this);
+				add(p);
+				reorder(p);
+				yLevel -= 20;
 			}
 			if(patty.getName().equals("CookedPatty")) {
-				add(new CookedPatty(226,yLevel, assembledBurger, assembledObjs, 'A', cookPanel, this));
-				yLevel -= 30;
+				CookedPatty p = new CookedPatty(226,yLevel, assembledBurger, assembledObjs, 'A', cookPanel, this);
+				add(p);
+				reorder(p);
+				yLevel -= 20;
 			}
 			if(patty.getName().equals("RawPatty")) {
-				add(new RawPatty(226,yLevel, assembledBurger, assembledObjs, 'A', cookPanel, this));
-				yLevel -= 30;
+				RawPatty p = new RawPatty(226,yLevel, assembledBurger, assembledObjs, 'A', cookPanel, this);
+				add(p);
+				reorder(p);
+				yLevel -= 20;
 			}
 		}
 	}
@@ -286,7 +292,7 @@ public class AssemblePanel extends JLayeredPane{
 	
 	public void showTickets() {
 		for(int i = 0; i<BurgeriaMain.getTheOrders().size(); i++) {
-			ArrayList <String> ingredients = BurgeriaMain.getTheOrders().get(i).getListIngredients();
+			ArrayList <String> ingredients = BurgeriaMain.getTheOrders().get(i).getListIngredientsForward();
 			String combined = BurgeriaMain.getTheOrders().get(i).getTicketNumber()+"\n";
 			for(String item: ingredients) {
 				combined+=item+"\n";
