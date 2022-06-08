@@ -29,7 +29,7 @@ public class Lettuce extends JComponent{
 	
 	public Lettuce(int x, int y, ArrayList<String> stackedItems, ArrayList <JComponent> assembledObjs, AssemblePanel panel) {
 		setLocation(x,y);
-		setSize(115, 115);
+		setSize(115, 60);
 		
 		bigOval = new Ellipse2D.Double(10,10,90,35);
 		leaf1 = new Ellipse2D.Double(15,30,30,20);
@@ -90,6 +90,9 @@ public class Lettuce extends JComponent{
 					//adjusting money
 					BurgeriaMain.changeMoney(-0.25);
 					panel.updateMoney();
+					
+					//adjusting buttons
+					panel.enableButtons();
 				}				
 			
 			}
