@@ -46,7 +46,7 @@ public class Orders {
 		tomatoes = t; 
 		if(tomatoes) {
 			price += 0.25; 
-			listIngredients.add("Tomatoe");
+			listIngredients.add("Tomato");
 		}
 		lettuce = l; 
 		if(lettuce) {
