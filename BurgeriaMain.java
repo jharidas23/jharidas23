@@ -191,7 +191,7 @@ public class BurgeriaMain extends JFrame{
 	//this is for you to copy into your panel classes to make the tickets reappear each time
 	public void showTickets() {
 		for(int i = 0; i<BurgeriaMain.getTheOrders().size(); i++) {
-			ArrayList <String> ingredients = BurgeriaMain.getTheOrders().get(i).getListIngredients();
+			ArrayList <String> ingredients = BurgeriaMain.getTheOrders().get(i).getListIngredientsForward();
 			String combined = BurgeriaMain.getTheOrders().get(i).getTicketNumber()+"\n";
 			for(String item: ingredients) {
 				combined+=item+"\n";
@@ -199,7 +199,7 @@ public class BurgeriaMain extends JFrame{
 
 			JOptionPane optionPane = new JOptionPane(combined+"Cost to Make: $"+BurgeriaMain.getTheOrders().get(i).getPrice());
 			JDialog d = optionPane.createDialog((JFrame) null, "Order");
-			d.setLocation(800,100);
+			d.setLocation(700,100);
 			d.setVisible(true);
 		}
 	}
