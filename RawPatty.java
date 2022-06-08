@@ -24,9 +24,9 @@ public class RawPatty extends JComponent implements ActionListener{
 	private Timer t;
 	private Cook cPanel; 
 	private ArrayList<String> assembledItems; 
+	private ArrayList<JComponent> assembledObjs;
 	private char screen; 
 	private AssemblePanel aPanel;
-	private ArrayList<JComponent> assembledObjs; 
 	
 	private RawPatty obj = this; 
 	
@@ -35,7 +35,7 @@ public class RawPatty extends JComponent implements ActionListener{
 
 	
 	  
-	public RawPatty(int x, int y, ArrayList<String> stackedItems, ArrayList ao, char sc, Cook cookPanel, AssemblePanel assemblePanel){
+	public RawPatty(int x, int y, ArrayList<String> stackedItems, ArrayList assembledObjs, char sc, Cook cookPanel, AssemblePanel assemblePanel){
 				
 		cPanel = cookPanel;
 		
@@ -45,7 +45,7 @@ public class RawPatty extends JComponent implements ActionListener{
 		
 		aPanel = assemblePanel; 
 		
-		assembledObjs = ao; 
+		this.assembledObjs = assembledObjs;
 		
 		setLocation(x,y);
 		setSize(101, 61);
@@ -66,8 +66,8 @@ public class RawPatty extends JComponent implements ActionListener{
 
 			@Override
 			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
 				aPanel.reorder(obj);
+				
 			}
 
 			@Override
@@ -75,10 +75,6 @@ public class RawPatty extends JComponent implements ActionListener{
 				System.out.println("mouse released");
 				if(screen == 'C')
 				{
-					BurgeriaMain.changeMoney(-1.00);
-					cPanel.updateMoney();
-					cPanel.revalidate(); 
-					cPanel.repaint(); 
 					System.out.println("cook screen"); 
 					if((getX()>250 && getX()<950)&&(getY()>155 && getY()<703))
 					{
@@ -88,8 +84,8 @@ public class RawPatty extends JComponent implements ActionListener{
 					}
 					if((getX()>1000 && getX()<1150) && (getY()>510 && getY()<585))
 					{
-						BurgeriaMain.getCompletePatties().add(obj); 
-						//BurgeriaMain.addCompletePatty(obj); 
+						//BurgeriaMain.getCompletePatties().add(obj); 
+						BurgeriaMain.addCompletePatty(obj); 
 						cPanel.remove(obj); 
 						t.stop(); 
 						System.out.println("item has been removed"); 
@@ -126,6 +122,9 @@ public class RawPatty extends JComponent implements ActionListener{
 						assembledItems.add("Patty");
 						assembledObjs.add(obj);
 						donePlacing = true;
+						
+						//adjusting buttons
+						assemblePanel.enableButtons();
 					}
 				}
 			}
