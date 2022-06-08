@@ -1,5 +1,6 @@
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Insets;
@@ -15,7 +16,9 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JComponent;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
@@ -43,11 +46,6 @@ public class AssemblePanel extends JLayeredPane{
 	private AssemblePanel panel = this;
 	private Cook cookPanel;
 	
-	private boolean burnt;
-	private boolean raw;
-	
-	private double price;
-	
 	
 	public AssemblePanel(ArrayList<Orders> orders){
 		
@@ -60,11 +58,6 @@ public class AssemblePanel extends JLayeredPane{
 		finishButtons = new ArrayList<JButton>();
 		
 		cookPanel = BurgeriaMain.getCookPanel();
-		
-		burnt = false;
-		raw = false;
-		
-		price = 0;
 		
 		for(int i = 0; i<30; i++) {
 			add(new TopBun(10,0, assembledBurger, assembledObjs, this));
@@ -81,6 +74,8 @@ public class AssemblePanel extends JLayeredPane{
 			
 			
 		}
+		
+		
 		
 		//prices
 		JLabel lblTopBun = new JLabel("$0.40");
@@ -149,15 +144,15 @@ public class AssemblePanel extends JLayeredPane{
 		for(JComponent patty: completePatties) {
 			if(patty.getName().equals("BurntPatty")) {
 				add(new BurntPatty(226,yLevel, assembledBurger, assembledObjs, 'A', cookPanel, this));
-				yLevel -= 50;
+				yLevel -= 30;
 			}
 			if(patty.getName().equals("CookedPatty")) {
 				add(new CookedPatty(226,yLevel, assembledBurger, assembledObjs, 'A', cookPanel, this));
-				yLevel -= 50;
+				yLevel -= 30;
 			}
 			if(patty.getName().equals("RawPatty")) {
 				add(new RawPatty(226,yLevel, assembledBurger, assembledObjs, 'A', cookPanel, this));
-				yLevel -= 50;
+				yLevel -= 30;
 			}
 		}
 	}
@@ -169,53 +164,119 @@ public class AssemblePanel extends JLayeredPane{
 		
 	}
 	
+	public void enableButtons() {
+		for(JButton button: finishButtons) {
+			button.setEnabled(true);
+		}
+	}
+	
+	
 	public void addButtons() {
-		System.out.println("addButtons method running");
 		//count how many tickets have been made and make that many finish buttons
 		
-		
 		int buttonYLocation = 200;
-		System.out.println(BurgeriaMain.getNumOrders());
-		for(int i = 1; i<=BurgeriaMain.getNumOrders(); i++) {
-			JButton buttonFinish = new JButton("Finish Order "+i);
+		for(int n = 1; n<=BurgeriaMain.getNumOrders(); n++) {
+			JButton buttonFinish = new JButton("Finish Order "+n);
 			buttonFinish.setBounds(1000,buttonYLocation, 150,40);
 			buttonYLocation += 10+40;
+			finishButtons.add(buttonFinish);
 			add(buttonFinish);
+			buttonFinish.setEnabled(false);
 			
-			//grading system
+			final int ticketIndex = n-1;
+			
 			buttonFinish.addActionListener(new ActionListener() {
-
+				
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					//when they click, give burger grade in joption pane
+					int correctCount = 0;
+					boolean incorrectCooking = false;
 					
-//					for(int i = 1; i<assembledBurger.size()-1; i++) {
-//						if(assembledBurger.get(i).equals(/*order item*/)) {
-//							if(burnt || raw) {
-//								JOptionPane.showMessageDialog(null, "Make sure you cook the patty properly!\nYou made $"+price*1.5, "Deposit", JOptionPane.PLAIN_MESSAGE);
-//								BurgeriaMain.changeMoney(price*1.5);
-//								updateMoney();
-//							}
-//							else {
-//								JOptionPane.showMessageDialog(null, "Bravo!\nYou made $"+price*2, "Deposit", JOptionPane.PLAIN_MESSAGE);
-//								BurgeriaMain.changeMoney(price*2);
-//								updateMoney();
-//							}
-//						}
-//						else {
-//							if(burnt || raw) {
-//								JOptionPane.showMessageDialog(null, "You should really brush up on those chef skills!\nYou made $"+price*0.5, "Deposit", JOptionPane.PLAIN_MESSAGE);
-//								BurgeriaMain.changeMoney(price*0.5);
-//								updateMoney();
-//							}
-//							else {
-//								JOptionPane.showMessageDialog(null, "These are the wrong ingredients!\nYou made $"+price, "Deposit", JOptionPane.PLAIN_MESSAGE);
-//								BurgeriaMain.changeMoney(price);
-//								updateMoney();
-//							}
-//						}
-//						
-//					}
+					ArrayList<String> strOrder = BurgeriaMain.getTheOrders().get(ticketIndex).getListIngredients();
+					
+					for(int i = 0; i<assembledBurger.size(); i++) {
+						
+						//find correctCount
+						if(assembledBurger.get(i).equals(strOrder.get(i))) {
+							correctCount++;
+						}
+						
+						else {
+							if((assembledBurger.get(i).equals("RawPatty") || 
+									assembledBurger.get(i).equals("CookedPatty") ||
+									assembledBurger.get(i).equals("BurntPatty")) && 
+									strOrder.get(i).equals("Patty")) {
+								correctCount++;
+							}
+						}
+						
+						//find incorrectCooking
+						if(assembledBurger.get(i).equals("RawPatty") || assembledBurger.get(i).equals("RawPatty")){
+							incorrectCooking = true;
+						}
+						
+						
+					}
+					
+					//making jOptionPanes depending on correctCount and incorrectCooking
+					if(correctCount == strOrder.size()) {
+						if(incorrectCooking) {
+							JOptionPane optionPane = new JOptionPane("Make sure you cook the patty properly!\nYou made $"+BurgeriaMain.getPrice(ticketIndex)*1.5);
+							JDialog d = optionPane.createDialog((JFrame) null, "Deposit");
+							d.setLocation(500,300);
+							d.setVisible(true);
+							BurgeriaMain.changeMoney(BurgeriaMain.getPrice(ticketIndex)*1.5);
+							updateMoney();
+						}
+						else {
+							JOptionPane optionPane = new JOptionPane("Bravo!\nYou made $"+BurgeriaMain.getPrice(ticketIndex)*2);
+							JDialog d = optionPane.createDialog((JFrame) null, "Deposit");
+							d.setLocation(500,300);
+							d.setVisible(true);
+							BurgeriaMain.changeMoney(BurgeriaMain.getPrice(ticketIndex)*2);
+							updateMoney();
+						}
+					}
+					else {
+						if(incorrectCooking) {
+							JOptionPane optionPane = new JOptionPane("You should really brush up on those chef skills!\\nYou made $"+BurgeriaMain.getPrice(ticketIndex)*0.5);
+							JDialog d = optionPane.createDialog((JFrame) null, "Deposit");
+							d.setLocation(500,300);
+							d.setVisible(true);
+							BurgeriaMain.changeMoney(BurgeriaMain.getPrice(ticketIndex)*0.5);
+							updateMoney();
+						}
+						else {
+							JOptionPane optionPane = new JOptionPane("These are the wrong ingredients!\nYou made $"+BurgeriaMain.getPrice(ticketIndex));
+							JDialog d = optionPane.createDialog((JFrame) null, "Deposit");
+							d.setLocation(500,300);
+							d.setVisible(true);
+							BurgeriaMain.changeMoney(BurgeriaMain.getPrice(ticketIndex));
+							updateMoney();
+						}
+					}
+					
+					//remove button and reset the rest to enabled false
+					panel.remove(finishButtons.get(ticketIndex));
+					finishButtons.remove(ticketIndex);
+					panel.revalidate();
+					panel.repaint();
+					for(JButton button: finishButtons) {
+						button.setEnabled(false);
+					}
+					
+					//remove burger
+					for(int i = assembledObjs.size()-1; i>=0; i--) {
+						panel.remove(assembledObjs.get(i));
+						assembledObjs.remove(assembledObjs.get(i));
+						assembledBurger.remove(assembledBurger.get(i));//resetting string array list
+					}
+					panel.repaint();
+					panel.revalidate();
+					
+					//reset all vars
+					BurgeriaMain.removeOrder(ticketIndex);
 				}
 				
 			});
@@ -223,12 +284,23 @@ public class AssemblePanel extends JLayeredPane{
 		
 	}
 	
-	public void updateMoney() {
-		lblMoney.setText("Balance: $"+BurgeriaMain.getMoney());
+	public void showTickets() {
+		for(int i = 0; i<BurgeriaMain.getTheOrders().size(); i++) {
+			ArrayList <String> ingredients = BurgeriaMain.getTheOrders().get(i).getListIngredients();
+			String combined = BurgeriaMain.getTheOrders().get(i).getTicketNumber()+"\n";
+			for(String item: ingredients) {
+				combined+=item+"\n";
+			}
+
+			JOptionPane optionPane = new JOptionPane(combined+"Cost to Make: $"+BurgeriaMain.getTheOrders().get(i).getPrice());
+			JDialog d = optionPane.createDialog((JFrame) null, "Order");
+			d.setLocation(700,100);
+			d.setVisible(true);
+		}
 	}
 	
-	public void addToPrice(double amt) {
-		price+=amt;
+	public void updateMoney() {
+		lblMoney.setText("Balance: $"+BurgeriaMain.getMoney());
 	}
 	
 	public ArrayList<JComponent> getAssembledObjs(){
