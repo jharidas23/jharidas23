@@ -30,6 +30,11 @@ public class Cook extends JPanel
 	private ArrayList<String> order; 
 	private Cook cookPanel = this; 
 	private AssemblePanel assemblePanel;
+	private JLabel lblTrash; 
+	private JLabel lblNext;
+	private Rectangle wireTop; 
+	private Rectangle wireMiddle; 
+	private Rectangle wireBottom; 
 	
 	private JLabel lblMoney;
 	
@@ -46,10 +51,6 @@ public class Cook extends JPanel
 		
 		rp = new ArrayList<JComponent>(); 
 		
-		//balance label
-		lblMoney = new JLabel("Balance: $"+BurgeriaMain.getMoney());
-		lblMoney.setBounds(3,15,100,20);
-		add(lblMoney);
 		
 		rp.add(new RawPatty(50,550,order, BurgeriaMain.getAssemblePanel().getAssembledObjs(), 'C', cookPanel, assemblePanel));
 		rp.add(new RawPatty(50,520,order,BurgeriaMain.getAssemblePanel().getAssembledObjs(),'C', cookPanel, assemblePanel)); 
@@ -60,6 +61,18 @@ public class Cook extends JPanel
 		{
 			add(rp.get(i)); 
 		}
+		
+		lblTrash = new JLabel("Trash");
+		lblTrash.setBounds(112,230,100,20);
+		add(lblTrash);
+		
+		lblNext = new JLabel("Next");
+		lblNext.setBounds(1062,490,100,20);
+		add(lblNext);
+		
+		lblMoney = new JLabel("Balance: $"+BurgeriaMain.getMoney());
+		lblMoney.setBounds(3,15,100,20);
+		add(lblMoney);
 	}
 	
 	public static void main(String[] args)
@@ -86,6 +99,9 @@ public class Cook extends JPanel
 		trash = new Ellipse2D.Double(50,155,150,75);
 		next = new Ellipse2D.Double(1000,510,150,75);
 		ticketCircle = new Ellipse2D.Double(990,-20,250,250); 
+		wireTop = new Rectangle(0,10,1200,2);
+		wireMiddle = new Rectangle(0,12,1200,2);
+		wireBottom = new Rectangle(0,14,1200,3);
 	}
 	
 	public void paintComponent(Graphics g)
@@ -107,6 +123,12 @@ public class Cook extends JPanel
 		g2.setColor(new Color(57,54,54));
 		g2.fill(next);
 		
+		g2.setColor(new Color(192,192,192));
+		g2.fill(wireMiddle);
+		g2.setColor(Color.BLACK);
+		g2.fill(wireTop);
+		g2.fill(wireBottom);
+
 		g2.setColor(new Color(57,54,54));
 		g2.fill(ticketCircle);
 	}
