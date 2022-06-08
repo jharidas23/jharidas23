@@ -112,11 +112,11 @@ public class CookedPatty extends JComponent implements ActionListener{
 				{
 					if(!donePlacing) {
 						dropped = true;
-						assembledItems.add("Patty");
+						assembledItems.add("CookedPatty");
 						assembledObjs.add(obj);
 						donePlacing = true;
 						
-						BurgeriaMain.removeFromCompletePatty(obj);
+						BurgeriaMain.removeFromCompletePatties(obj);
 						
 						//adjusting buttons
 						assemblePanel.enableButtons();
