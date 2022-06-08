@@ -39,7 +39,7 @@ public class IntroPanel extends JPanel{
 			public void actionPerformed(ActionEvent e) 
 			{
 				setVisible(false);
-				new BurgeriaMain().setVisible(true);
+				// new BurgeriaMain().setVisible(true);
 			}
 			
 		});
