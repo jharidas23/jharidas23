@@ -1,5 +1,6 @@
 import java.awt.geom.Rectangle2D.Double;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Orders {
 	
@@ -19,6 +20,7 @@ public class Orders {
 	private double price; 
 	
 	private ArrayList<String> listIngredients;
+	private ArrayList<String> listIngredientsForward;
 	
 	public Orders(int p, String c, boolean ch, boolean l, boolean pi, boolean t, boolean o) {
 		patties = p; 
@@ -60,6 +62,12 @@ public class Orders {
 		
 		listIngredients.add(condiments);
 		listIngredients.add("TopBun");
+		
+		//making copy
+		listIngredientsForward = new ArrayList<String>();
+		listIngredientsForward = (ArrayList<String>)listIngredients.clone();
+		Collections.reverse(listIngredientsForward);
+		
 	}
 	
 	public int getPatties() {
@@ -117,6 +125,9 @@ public class Orders {
 	}
 	public ArrayList<String> getListIngredients(){
 		return listIngredients;
+	}
+	public ArrayList<String> getListIngredientsForward(){
+		return listIngredientsForward;
 	}
 
 }
