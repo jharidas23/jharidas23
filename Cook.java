@@ -31,6 +31,8 @@ public class Cook extends JPanel
 	private Cook cookPanel = this; 
 	private AssemblePanel assemblePanel;
 	
+	private JLabel lblMoney;
+	
 	public Cook(ArrayList<Orders> orders)
 	{ 
 		
@@ -43,6 +45,11 @@ public class Cook extends JPanel
 		cookPanel = this; 
 		
 		rp = new ArrayList<JComponent>(); 
+		
+		//balance label
+		lblMoney = new JLabel("Balance: $"+BurgeriaMain.getMoney());
+		lblMoney.setBounds(3,15,100,20);
+		add(lblMoney);
 		
 		rp.add(new RawPatty(50,550,order, BurgeriaMain.getAssemblePanel().getAssembledObjs(), 'C', cookPanel, assemblePanel));
 		rp.add(new RawPatty(50,520,order,BurgeriaMain.getAssemblePanel().getAssembledObjs(),'C', cookPanel, assemblePanel)); 
@@ -68,6 +75,7 @@ public class Cook extends JPanel
 		
 		myFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		myFrame.setVisible(true);
+		
 	}
 	
 	public void drawBackground()
@@ -131,5 +139,9 @@ public class Cook extends JPanel
 			d.setLocation(700,100);
 			d.setVisible(true);
 		}
+	}
+	
+	public void updateMoney() {
+		lblMoney.setText("Balance: $"+BurgeriaMain.getMoney());
 	}
 }
