@@ -88,9 +88,22 @@ public class RawPatty extends JComponent implements ActionListener{
 					if((getX()>1000 && getX()<1150) && (getY()>510 && getY()<585))
 					{
 						//BurgeriaMain.getCompletePatties().add(obj); 
-						BurgeriaMain.addCompletePatty(obj); 
-						cPanel.remove(obj); 
+						BurgeriaMain.addCompletePatty(obj);  
+						ArrayList<JComponent> rp = cPanel.getArray(); 
 						t.stop(); 
+						int index = rp.indexOf(obj);
+						int y = 0;
+						if(index == 0)
+							y = 550; 
+						else if(index == 1)
+							y = 520; 
+						else if(index == 2)
+							y = 490; 
+						else if(index == 3)
+							y = 460; 
+						JComponent r = rp.set(index, new RawPatty(50,y,cPanel.getOrder(),assembledObjs, 'C', cPanel, aPanel)); 
+						cPanel.remove(r);  
+						cPanel.add(rp.get(index));   
 						System.out.println("item has been removed"); 
 						screen = 'A'; 
 						cPanel.revalidate(); 
