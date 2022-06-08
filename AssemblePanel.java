@@ -66,10 +66,10 @@ public class AssemblePanel extends JLayeredPane{
 			add(new Onion(15,300, assembledBurger, assembledObjs, this));
 			add(new Pickle(7,385, assembledBurger, assembledObjs, this));
 			add(new BottomBun(10,530, assembledBurger,assembledObjs, this));
-			add(new CondimentBottle(950,480,"Barbeque", assembledBurger, assembledObjs, this));
-			add(new CondimentBottle(900,480,"Mayo", assembledBurger, assembledObjs, this));
-			add(new CondimentBottle(850,480,"Mustard", assembledBurger, assembledObjs, this));
-			add(new CondimentBottle(800,480,"Ketchup", assembledBurger, assembledObjs, this));
+			add(new CondimentSplat(925,525,"Barbeque", assembledBurger, assembledObjs, this));
+			add(new CondimentSplat(825,525,"Mayo", assembledBurger, assembledObjs, this));
+			add(new CondimentSplat(725,525,"Mustard", assembledBurger, assembledObjs, this));
+			add(new CondimentSplat(625,525,"Ketchup", assembledBurger, assembledObjs, this));
 			
 			
 		}
@@ -104,6 +104,26 @@ public class AssemblePanel extends JLayeredPane{
 		JLabel lblBottomBun = new JLabel("$0.40");
 		lblBottomBun.setBounds(3,557,120,20);
 		add(lblBottomBun);
+		
+		JLabel lblKetchup = new JLabel("Ketchup");
+		lblKetchup.setBounds(640,570,100,20);
+		add(lblKetchup);
+		
+		JLabel lblMustard = new JLabel("Mustard");
+		lblMustard.setBounds(740,570,100,20);
+		add(lblMustard);
+		
+		JLabel lblMayo = new JLabel("Mayo");
+		lblMayo.setBounds(850,570,100,20);
+		add(lblMayo);
+		
+		JLabel lblBarbeque = new JLabel("Barbeque");
+		lblBarbeque.setBounds(940,570,100,20);
+		add(lblBarbeque);
+		
+		JLabel lblCondiments = new JLabel("Condiments: $0.50 each");
+		lblCondiments.setBounds(740,500,170,20);
+		add(lblCondiments);
 		
 		//balance label
 		lblMoney = new JLabel("Balance: $"+BurgeriaMain.getMoney());
@@ -181,7 +201,7 @@ public class AssemblePanel extends JLayeredPane{
 		int buttonYLocation = 200;
 		for(int n = 1; n<=BurgeriaMain.getNumOrders(); n++) {
 			JButton buttonFinish = new JButton("Finish Order "+n);
-			buttonFinish.setBounds(1000,buttonYLocation, 150,40);
+			buttonFinish.setBounds(1020,buttonYLocation, 150,40);
 			buttonYLocation += 10+40;
 			finishButtons.add(buttonFinish);
 			add(buttonFinish);
@@ -324,69 +344,8 @@ public class AssemblePanel extends JLayeredPane{
 		return assembledObjs;
 	}
 	
-	public int getYValUnderneath(int x) {
-		int largestY = 400;
-		for(JComponent item: assembledObjs) {
-			if(Math.abs(item.getX()-x)<=100 || Math.abs(item.getX()-x)<=140) {
-				if(getCenterY(item)<largestY) {
-					largestY = getCenterY(item);
-				}
-			}
-		}
-		return largestY;
-	}
 	
-	public int getCenterX(JComponent item) {
-		int newX = 0;
-		if(item.getName().equals("TopBun")) {
-			newX = item.getX()+50;
-		}
-		if(item.getName().equals("Tomato")) {
-			newX = item.getX()+50;
-		}
-		if(item.getName().equals("Lettuce")) {
-			newX = item.getX()+45;
-		}
-		if(item.getName().equals("Onion")) {
-			newX = item.getX()+45;
-		}
-		if(item.getName().equals("Pickle")) {
-			newX = item.getX()+40;
-		}
-		if(item.getName().equals("Cheese")) {
-			newX = item.getX()+40;
-		}
-		if(item.getName().equals("BottomBun")) {
-			newX = item.getX()+50;
-		}
-		return newX;
-	}
 	
-	public int getCenterY(JComponent item) {
-		int newY = 0;
-		if(item.getName().equals("TopBun")) {
-			newY = item.getY()+85;
-		}
-		if(item.getName().equals("Tomato")) {
-			newY = item.getY()+15;
-		}
-		if(item.getName().equals("Lettuce")) {
-			newY = item.getY()+23;
-		}
-		if(item.getName().equals("Onion")) {
-			newY = item.getY()+20;
-		}
-		if(item.getName().equals("Pickle")) {
-			newY = item.getY()+13;
-		}
-		if(item.getName().equals("Cheese")) {
-			newY = item.getY()+15;
-		}
-		if(item.getName().equals("BottomBun")) {
-			newY = item.getY()+15;
-		}
-		return newY;
-	}
 	
 	public void paintComponent(Graphics g) {
 		Graphics2D g2 = (Graphics2D) g;
