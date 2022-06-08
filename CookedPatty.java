@@ -79,8 +79,21 @@ public class CookedPatty extends JComponent implements ActionListener{
 					{
 						//BurgeriaMain.getCompletePatties().add(obj); 
 						BurgeriaMain.addCompletePatty(obj); 
-						cPanel.remove(obj); 
+						ArrayList<JComponent> rp = cPanel.getArray(); 
 						t.stop(); 
+						int index = rp.indexOf(obj);
+						int y = 0;
+						if(index == 0)
+							y = 550; 
+						else if(index == 1)
+							y = 520; 
+						else if(index == 2)
+							y = 490; 
+						else if(index == 3)
+							y = 460; 
+						JComponent r = rp.set(index, new RawPatty(50,y,cPanel.getOrder(),assembledObjs, 'C', cPanel, aPanel)); 
+						cPanel.remove(r);  
+						cPanel.add(rp.get(index));   
 						System.out.println("item has been removed"); 
 						screen = 'A'; 
 						cPanel.revalidate(); 
