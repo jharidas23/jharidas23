@@ -62,7 +62,7 @@ public class OrderPanel extends JPanel{
 					Orders order = random(); 
 					JOptionPane pane = new JOptionPane();
 					ticketInformation.add(order);
-					String theOrder = order.getTicketNumber() + "\n" + orderofOrders(order) + "\nPrice: $" + order.getPrice();
+					String theOrder = order.getTicketNumber() + "\n" + orderofOrders(order) + "\nCost to Make: $" + order.getPrice();
 					final String menu = theOrder;
 					final JOptionPane optionPane = new JOptionPane(theOrder); 
 					final JDialog d = optionPane.createDialog((JFrame) null, "Order"); 
