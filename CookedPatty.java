@@ -75,14 +75,10 @@ public class CookedPatty extends JComponent implements ActionListener{
 				System.out.println("mouse released");
 				if(screen == 'C')
 				{
-					BurgeriaMain.changeMoney(-1.00);
-					cPanel.updateMoney();
-					cPanel.revalidate(); 
-					cPanel.repaint(); 
 					if((getX()>1000 && getX()<1150) && (getY()>510 && getY()<585))
 					{
-						BurgeriaMain.getCompletePatties().add(obj); 
-						//BurgeriaMain.addCompletePatty(obj); 
+						//BurgeriaMain.getCompletePatties().add(obj); 
+						BurgeriaMain.addCompletePatty(obj); 
 						cPanel.remove(obj); 
 						t.stop(); 
 						System.out.println("item has been removed"); 
@@ -119,6 +115,9 @@ public class CookedPatty extends JComponent implements ActionListener{
 						assembledItems.add("Patty");
 						assembledObjs.add(obj);
 						donePlacing = true;
+						
+						//adjusting buttons
+						assemblePanel.enableButtons();
 				}
 			}
 		}
