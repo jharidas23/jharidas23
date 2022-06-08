@@ -44,6 +44,7 @@ public class AssemblePanel extends JLayeredPane{
 	
 	private AssemblePanel panel = this;
 	private Cook cookPanel;
+	private boolean onScreen = false; 
 	
 	
 	public AssemblePanel(ArrayList<Orders> orders){
@@ -160,20 +161,23 @@ public class AssemblePanel extends JLayeredPane{
 	public void drawPatties(ArrayList<JComponent> completePatties) {
 		int yLevel = 490;
 		for(JComponent patty: completePatties) {
-			if(patty.getName().equals("BurntPatty")) {
+			if(patty.getName().equals("BurntPatty") && !onScreen) {
 				BurntPatty p = new BurntPatty(226,yLevel, assembledBurger, assembledObjs, 'A', cookPanel, this);
+				onScreen = true; 
 				add(p);
 				reorder(p);
 				yLevel -= 20;
 			}
-			if(patty.getName().equals("CookedPatty")) {
+			if(patty.getName().equals("CookedPatty") && !onScreen) {
 				CookedPatty p = new CookedPatty(226,yLevel, assembledBurger, assembledObjs, 'A', cookPanel, this);
+				onScreen = true; 
 				add(p);
 				reorder(p);
 				yLevel -= 20;
 			}
-			if(patty.getName().equals("RawPatty")) {
+			if(patty.getName().equals("RawPatty") && !onScreen) {
 				RawPatty p = new RawPatty(226,yLevel, assembledBurger, assembledObjs, 'A', cookPanel, this);
+				onScreen = true; 
 				add(p);
 				reorder(p);
 				yLevel -= 20;
@@ -216,6 +220,7 @@ public class AssemblePanel extends JLayeredPane{
 					//when they click, give burger grade in joption pane
 					int correctCount = 0;
 					boolean incorrectCooking = false;
+					onScreen = false; 
 					
 					ArrayList<String> strOrder = BurgeriaMain.getTheOrders().get(ticketIndex).getListIngredients();
 				
