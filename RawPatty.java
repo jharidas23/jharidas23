@@ -122,11 +122,11 @@ public class RawPatty extends JComponent implements ActionListener{
 				{
 					if(!donePlacing) {
 						dropped = true;
-						assembledItems.add("Patty");
+						assembledItems.add("RawPatty");
 						assembledObjs.add(obj);
 						donePlacing = true;
 						
-						BurgeriaMain.removeFromCompletePatty(obj);
+						BurgeriaMain.removeFromCompletePatties(obj);
 						
 						//adjusting buttons
 						assemblePanel.enableButtons();
