@@ -16,13 +16,16 @@ public class Orders {
 	private boolean pickles; 
 	private boolean tomatoes; 
 	private boolean onions;
-	private static int ticketNumber = 0; 
+	private int ticketNumber;
 	private double price; 
+	private static int nextTicketNumber = 1;
 	
 	private ArrayList<String> listIngredients;
 	private ArrayList<String> listIngredientsForward;
 	
 	public Orders(int p, String c, boolean ch, boolean l, boolean pi, boolean t, boolean o) {
+		ticketNumber = nextTicketNumber;
+		
 		patties = p; 
 		price += p; 
 		condiments = c;
@@ -58,7 +61,7 @@ public class Orders {
 			listIngredients.add("Patty");
 		}
 		price += 0.80; 
-		ticketNumber ++; 
+		nextTicketNumber ++; 
 		
 		listIngredients.add(condiments);
 		listIngredients.add("TopBun");
