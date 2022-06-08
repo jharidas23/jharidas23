@@ -16,18 +16,15 @@ import javax.swing.JComponent;
 public class CondimentSplat extends JComponent{
 	
 	private Ellipse2D.Double center;
-	private Ellipse2D.Double side1;
-	private Ellipse2D.Double side2;
-	private Ellipse2D.Double side3;
-	private Ellipse2D.Double side4;
-	private Ellipse2D.Double side5;
-	
 	
 	private String condiment;
 	
+	private boolean dropped = false;
+	private boolean donePlacing = false;
+	
 	private CondimentSplat obj = this;
 	  
-	public CondimentSplat(int x, int y, String c){
+	public CondimentSplat(int x, int y, String c, ArrayList<String> stackedItems, ArrayList<JComponent> assembledObjs, AssemblePanel panel){
 		
 		setLocation(x,y);
 		setSize(100, 60);
@@ -38,6 +35,77 @@ public class CondimentSplat extends JComponent{
 	
 		
 		
+		addMouseMotionListener(new MouseMotionListener() {
+
+			@Override
+			public void mouseDragged(MouseEvent e) {
+				if(!dropped) {
+					Point p = MouseInfo.getPointerInfo().getLocation();
+					int mouseX = p.x;
+					int mouseY = p.y;
+					
+					setLocation(mouseX-85,mouseY-87);
+				}
+				
+				
+				
+			}
+
+			@Override
+			public void mouseMoved(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
+		
+		addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				panel.reorder(obj);
+				
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+
+				if(!donePlacing) {
+					dropped = true;
+					stackedItems.add("BottomBun");
+					assembledObjs.add(obj);
+					donePlacing = true;
+					
+					//adjusting money
+					BurgeriaMain.changeMoney(-0.5);
+					panel.updateMoney();
+					
+					//adjusting buttons
+					panel.enableButtons();
+					
+				}				
+			
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
 		
 		
 	}
