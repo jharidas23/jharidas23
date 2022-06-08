@@ -85,6 +85,9 @@ public class BottomBun extends JComponent{
 					BurgeriaMain.changeMoney(-0.4);
 					panel.updateMoney();
 					
+					//adjusting buttons
+					panel.enableButtons();
+					
 				}				
 			
 			}
