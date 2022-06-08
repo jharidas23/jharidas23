@@ -108,6 +108,8 @@ public class BurntPatty extends JComponent{
 						assembledObjs.add(obj);
 						donePlacing = true;
 						
+						BurgeriaMain.removeFromCompletePatty(obj);
+						
 						//adjusting buttons
 						assemblePanel.enableButtons();
 				}
