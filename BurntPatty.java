@@ -104,11 +104,11 @@ public class BurntPatty extends JComponent{
 				{
 					if(!donePlacing) {
 						dropped = true;
-						assembledItems.add("Patty");
+						assembledItems.add("BurntPatty");
 						assembledObjs.add(obj);
 						donePlacing = true;
 						
-						BurgeriaMain.removeFromCompletePatty(obj);
+						BurgeriaMain.removeFromCompletePatties(obj);
 						
 						//adjusting buttons
 						assemblePanel.enableButtons();
