@@ -24,6 +24,7 @@ public class BurgeriaMain extends JFrame{
 	
 	private static AssemblePanel assemblePanel;
 	private static Cook cookPanel;
+	private static IntroPanel introPanel;
 	
 	public BurgeriaMain() {
 		//making overall panel
@@ -31,6 +32,8 @@ public class BurgeriaMain extends JFrame{
 		JPanel BurgeriaMainPanel = new JPanel();
 		BurgeriaMainPanel.setLayout(cl);
 		setResizable(false);
+		
+		
 
 		//bounds for jframe
 		setBounds(25,25,1200,650);
@@ -38,6 +41,7 @@ public class BurgeriaMain extends JFrame{
 		//initialize fields
 		theOrders = new ArrayList<Orders>();
 		money = 5;
+		introPanel = new IntroPanel(); 
 		completePatties = new ArrayList<JComponent>();
 		assemblePanel = new AssemblePanel(theOrders);
 		cookPanel = new Cook(theOrders);
@@ -69,18 +73,11 @@ public class BurgeriaMain extends JFrame{
 			
 		//add each panel to main panel
 			OrderPanel orderPanel = new OrderPanel(theOrders);
+			BurgeriaMainPanel.add(introPanel, "Intro Panel");
 			BurgeriaMainPanel.add(orderPanel, "Order Panel");
-//			
-			
-			
 			BurgeriaMainPanel.add(assemblePanel, "Assemble Panel");
-		
-			BurgeriaMainPanel.add(cookPanel, "Cook Panel");
-//			
-			
-//			
-			
-			
+			BurgeriaMainPanel.add(cookPanel, "Cook Panel");	
+						
 		//action listeners
 
 		menItOrder.addActionListener(new ActionListener() {
