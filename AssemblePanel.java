@@ -44,8 +44,8 @@ public class AssemblePanel extends JLayeredPane{
 	
 	private AssemblePanel panel = this;
 	private Cook cookPanel;
-	private boolean onScreen = false; 
 	
+	private boolean onScreen = false;
 	
 	public AssemblePanel(ArrayList<Orders> orders){
 		
@@ -163,7 +163,7 @@ public class AssemblePanel extends JLayeredPane{
 		for(JComponent patty: completePatties) {
 			if(patty.getName().equals("BurntPatty") && !onScreen) {
 				BurntPatty p = new BurntPatty(226,yLevel, assembledBurger, assembledObjs, 'A', cookPanel, this);
-				onScreen = true; 
+				onScreen = true;
 				add(p);
 				reorder(p);
 				yLevel -= 20;
@@ -220,9 +220,11 @@ public class AssemblePanel extends JLayeredPane{
 					//when they click, give burger grade in joption pane
 					int correctCount = 0;
 					boolean incorrectCooking = false;
-					onScreen = false; 
+					onScreen = false;
 					
 					ArrayList<String> strOrder = BurgeriaMain.getTheOrders().get(ticketIndex).getListIngredients();
+					System.out.println((strOrder.toString()));
+					System.out.println(assembledBurger.toString());
 				
 					if(assembledBurger.size()>strOrder.size()) {
 						JOptionPane optionPane = new JOptionPane("Too many ingredients!\nYou made $"+BurgeriaMain.getPrice(ticketIndex));
@@ -243,64 +245,53 @@ public class AssemblePanel extends JLayeredPane{
 							}
 							
 							else {
-								if((assembledBurger.get(i).equals("RawPatty") || 
-										assembledBurger.get(i).equals("CookedPatty") ||
-										assembledBurger.get(i).equals("BurntPatty")) && 
-										strOrder.get(i).equals("Patty")) {
+								if(assembledBurger.get(i).equals("CookedPatty") && strOrder.get(i).equals("Patty")) {
 									correctCount++;
 								}
-							}
-							
-							//find incorrectCooking
-							if(assembledBurger.get(i).equals("RawPatty") || assembledBurger.get(i).equals("RawPatty")){
-								incorrectCooking = true;
 							}
 							
 							
 						}
 						
-						//making jOptionPanes depending on correctCount and incorrectCooking
-						if(correctCount == strOrder.size()) {
-							if(incorrectCooking) {
-								JOptionPane optionPane = new JOptionPane("Make sure you cook the patty properly!\nYou made $"+BurgeriaMain.getPrice(ticketIndex)*1.5);
-								JDialog d = optionPane.createDialog((JFrame) null, "Deposit");
-								d.setLocation(500,300);
-								d.setVisible(true);
-								BurgeriaMain.changeMoney(BurgeriaMain.getPrice(ticketIndex)*1.5);
-								updateMoney();
-							}
-							else {
-								JOptionPane optionPane = new JOptionPane("Bravo!\nYou made $"+BurgeriaMain.getPrice(ticketIndex)*2);
-								JDialog d = optionPane.createDialog((JFrame) null, "Deposit");
-								d.setLocation(500,300);
-								d.setVisible(true);
-								BurgeriaMain.changeMoney(BurgeriaMain.getPrice(ticketIndex)*2);
-								updateMoney();
+						//check to see if there are patties
+						int burgerCount = 0;
+						for(String burgerItem: assembledBurger) {
+							if(burgerItem.equals("RawPatty") || burgerItem.equals("CookedPatty") || burgerItem.equals("CookedPatty")) {
+								burgerCount++;
 							}
 						}
+						
+						
+						if(correctCount == strOrder.size()) {
+							JOptionPane optionPane = new JOptionPane("Bravo!\nYou made $"+BurgeriaMain.getPrice(ticketIndex)*2);
+							JDialog d = optionPane.createDialog((JFrame) null, "Deposit");
+							d.setLocation(500,300);
+							d.setVisible(true);
+							BurgeriaMain.changeMoney(BurgeriaMain.getPrice(ticketIndex)*2);
+							updateMoney();
+						}
 						else {
-							if(incorrectCooking) {
-								JOptionPane optionPane = new JOptionPane("You should really brush up on those chef skills!\\nYou made $"+BurgeriaMain.getPrice(ticketIndex)*0.5);
-								JDialog d = optionPane.createDialog((JFrame) null, "Deposit");
-								d.setLocation(500,300);
-								d.setVisible(true);
-								BurgeriaMain.changeMoney(BurgeriaMain.getPrice(ticketIndex)*0.5);
-								updateMoney();
-							}
-							else {
-								JOptionPane optionPane = new JOptionPane("These are the wrong ingredients!\nYou made $"+BurgeriaMain.getPrice(ticketIndex));
-								JDialog d = optionPane.createDialog((JFrame) null, "Deposit");
-								d.setLocation(500,300);
-								d.setVisible(true);
-								BurgeriaMain.changeMoney(BurgeriaMain.getPrice(ticketIndex));
-								updateMoney();
-							}
+							JOptionPane optionPane = new JOptionPane("You should really brush up on those chef skills!\nYou made $"+BurgeriaMain.getPrice(ticketIndex)*0.5);
+							JDialog d = optionPane.createDialog((JFrame) null, "Deposit");
+							d.setLocation(500,300);
+							d.setVisible(true);
+							BurgeriaMain.changeMoney(BurgeriaMain.getPrice(ticketIndex)*0.5);
+							updateMoney();
+						}
+						System.out.println("burgerCount: "+burgerCount);
+						if(burgerCount<1) {
+							JOptionPane optionPane = new JOptionPane("The customer sued you for forgetting a patty!\nYou made -$3.00");
+							JDialog d = optionPane.createDialog((JFrame) null, "Deposit");
+							d.setLocation(500,300);
+							d.setVisible(true);
+							BurgeriaMain.changeMoney(-3);
+							updateMoney();
 						}
 						
 					}
 					
 					//remove button and reset the rest to enabled false
-					panel.remove(finishButtons.get(ticketIndex));
+					buttonFinish.setVisible(false);
 					finishButtons.remove(ticketIndex);
 					panel.revalidate();
 					panel.repaint();
