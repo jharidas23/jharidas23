@@ -78,6 +78,9 @@ public class Cheese extends JComponent {
 					BurgeriaMain.changeMoney(-0.5);
 					panel.updateMoney();
 					
+					//adjusting buttons
+					panel.enableButtons();
+					
 				}				
 			
 			}
