@@ -29,7 +29,6 @@ public class AssemblePanel extends JLayeredPane{
 
 	private Rectangle wall;
 	private Rectangle counter;
-	private Ellipse2D.Double trash;
 	private ArrayList<Rectangle> shelfTops;
 	private ArrayList<Rectangle> shelfSides;
 	private Rectangle wireTop;
@@ -118,7 +117,6 @@ public class AssemblePanel extends JLayeredPane{
 	public void drawBackground() {
 		wall = new Rectangle(0,0,1200,400);
 		counter = new Rectangle(0,400,1200,200);
-		trash = new Ellipse2D.Double(200,475,150,75);
 		
 		shelfTops = new ArrayList<Rectangle>();
 		for(int i = 0; i<7; i++) {
@@ -200,67 +198,80 @@ public class AssemblePanel extends JLayeredPane{
 					boolean incorrectCooking = false;
 					
 					ArrayList<String> strOrder = BurgeriaMain.getTheOrders().get(ticketIndex).getListIngredients();
+				
+					if(assembledBurger.size()>strOrder.size()) {
+						JOptionPane optionPane = new JOptionPane("Too many ingredients!\nYou made $"+BurgeriaMain.getPrice(ticketIndex));
+						JDialog d = optionPane.createDialog((JFrame) null, "Deposit");
+						d.setLocation(500,300);
+						d.setVisible(true);
+						BurgeriaMain.changeMoney(BurgeriaMain.getPrice(ticketIndex));
+						updateMoney();
+					}
 					
-					for(int i = 0; i<assembledBurger.size(); i++) {
+					else {
 						
-						//find correctCount
-						if(assembledBurger.get(i).equals(strOrder.get(i))) {
-							correctCount++;
+						for(int i = 0; i<assembledBurger.size(); i++) {
+							
+							//find correctCount
+							if(assembledBurger.get(i).equals(strOrder.get(i))) {
+								correctCount++;
+							}
+							
+							else {
+								if((assembledBurger.get(i).equals("RawPatty") || 
+										assembledBurger.get(i).equals("CookedPatty") ||
+										assembledBurger.get(i).equals("BurntPatty")) && 
+										strOrder.get(i).equals("Patty")) {
+									correctCount++;
+								}
+							}
+							
+							//find incorrectCooking
+							if(assembledBurger.get(i).equals("RawPatty") || assembledBurger.get(i).equals("RawPatty")){
+								incorrectCooking = true;
+							}
+							
+							
 						}
 						
+						//making jOptionPanes depending on correctCount and incorrectCooking
+						if(correctCount == strOrder.size()) {
+							if(incorrectCooking) {
+								JOptionPane optionPane = new JOptionPane("Make sure you cook the patty properly!\nYou made $"+BurgeriaMain.getPrice(ticketIndex)*1.5);
+								JDialog d = optionPane.createDialog((JFrame) null, "Deposit");
+								d.setLocation(500,300);
+								d.setVisible(true);
+								BurgeriaMain.changeMoney(BurgeriaMain.getPrice(ticketIndex)*1.5);
+								updateMoney();
+							}
+							else {
+								JOptionPane optionPane = new JOptionPane("Bravo!\nYou made $"+BurgeriaMain.getPrice(ticketIndex)*2);
+								JDialog d = optionPane.createDialog((JFrame) null, "Deposit");
+								d.setLocation(500,300);
+								d.setVisible(true);
+								BurgeriaMain.changeMoney(BurgeriaMain.getPrice(ticketIndex)*2);
+								updateMoney();
+							}
+						}
 						else {
-							if((assembledBurger.get(i).equals("RawPatty") || 
-									assembledBurger.get(i).equals("CookedPatty") ||
-									assembledBurger.get(i).equals("BurntPatty")) && 
-									strOrder.get(i).equals("Patty")) {
-								correctCount++;
+							if(incorrectCooking) {
+								JOptionPane optionPane = new JOptionPane("You should really brush up on those chef skills!\\nYou made $"+BurgeriaMain.getPrice(ticketIndex)*0.5);
+								JDialog d = optionPane.createDialog((JFrame) null, "Deposit");
+								d.setLocation(500,300);
+								d.setVisible(true);
+								BurgeriaMain.changeMoney(BurgeriaMain.getPrice(ticketIndex)*0.5);
+								updateMoney();
+							}
+							else {
+								JOptionPane optionPane = new JOptionPane("These are the wrong ingredients!\nYou made $"+BurgeriaMain.getPrice(ticketIndex));
+								JDialog d = optionPane.createDialog((JFrame) null, "Deposit");
+								d.setLocation(500,300);
+								d.setVisible(true);
+								BurgeriaMain.changeMoney(BurgeriaMain.getPrice(ticketIndex));
+								updateMoney();
 							}
 						}
 						
-						//find incorrectCooking
-						if(assembledBurger.get(i).equals("RawPatty") || assembledBurger.get(i).equals("RawPatty")){
-							incorrectCooking = true;
-						}
-						
-						
-					}
-					
-					//making jOptionPanes depending on correctCount and incorrectCooking
-					if(correctCount == strOrder.size()) {
-						if(incorrectCooking) {
-							JOptionPane optionPane = new JOptionPane("Make sure you cook the patty properly!\nYou made $"+BurgeriaMain.getPrice(ticketIndex)*1.5);
-							JDialog d = optionPane.createDialog((JFrame) null, "Deposit");
-							d.setLocation(500,300);
-							d.setVisible(true);
-							BurgeriaMain.changeMoney(BurgeriaMain.getPrice(ticketIndex)*1.5);
-							updateMoney();
-						}
-						else {
-							JOptionPane optionPane = new JOptionPane("Bravo!\nYou made $"+BurgeriaMain.getPrice(ticketIndex)*2);
-							JDialog d = optionPane.createDialog((JFrame) null, "Deposit");
-							d.setLocation(500,300);
-							d.setVisible(true);
-							BurgeriaMain.changeMoney(BurgeriaMain.getPrice(ticketIndex)*2);
-							updateMoney();
-						}
-					}
-					else {
-						if(incorrectCooking) {
-							JOptionPane optionPane = new JOptionPane("You should really brush up on those chef skills!\\nYou made $"+BurgeriaMain.getPrice(ticketIndex)*0.5);
-							JDialog d = optionPane.createDialog((JFrame) null, "Deposit");
-							d.setLocation(500,300);
-							d.setVisible(true);
-							BurgeriaMain.changeMoney(BurgeriaMain.getPrice(ticketIndex)*0.5);
-							updateMoney();
-						}
-						else {
-							JOptionPane optionPane = new JOptionPane("These are the wrong ingredients!\nYou made $"+BurgeriaMain.getPrice(ticketIndex));
-							JDialog d = optionPane.createDialog((JFrame) null, "Deposit");
-							d.setLocation(500,300);
-							d.setVisible(true);
-							BurgeriaMain.changeMoney(BurgeriaMain.getPrice(ticketIndex));
-							updateMoney();
-						}
 					}
 					
 					//remove button and reset the rest to enabled false
@@ -283,8 +294,8 @@ public class AssemblePanel extends JLayeredPane{
 					
 					//reset all vars
 					BurgeriaMain.removeOrder(ticketIndex);
+					
 				}
-				
 			});
 		}
 		
@@ -385,9 +396,6 @@ public class AssemblePanel extends JLayeredPane{
 		
 		g2.setColor(new Color(153,153,153));//grey
 		g2.fill(counter);
-		
-		g2.setColor(Color.BLACK);
-		g2.fill(trash);
 		
 		g2.setColor(new Color(102,102,102));//dark grey
 		for(Rectangle top:shelfTops) {
