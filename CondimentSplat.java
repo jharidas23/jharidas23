@@ -78,7 +78,19 @@ public class CondimentSplat extends JComponent{
 
 				if(!donePlacing) {
 					dropped = true;
-					stackedItems.add("BottomBun");
+					if(condiment.equals("Ketchup")) {
+						stackedItems.add("Ketchup");
+						
+					}
+					else if(condiment.equals("Mustard")) {
+						stackedItems.add("Mustard");
+					}
+					else if(condiment.equals("Mayo")) {
+						stackedItems.add("Mayo");
+					}
+					else if(condiment.equals("Barbeque")) {
+						stackedItems.add("Barbeque");
+					}
 					assembledObjs.add(obj);
 					donePlacing = true;
 					
