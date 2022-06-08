@@ -116,6 +116,8 @@ public class CookedPatty extends JComponent implements ActionListener{
 						assembledObjs.add(obj);
 						donePlacing = true;
 						
+						BurgeriaMain.removeFromCompletePatty(obj);
+						
 						//adjusting buttons
 						assemblePanel.enableButtons();
 				}
