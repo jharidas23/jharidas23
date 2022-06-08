@@ -75,6 +75,9 @@ public class TopBun extends JComponent{
 					//adjusting money
 					BurgeriaMain.changeMoney(-0.40);
 					panel.updateMoney();
+					
+					//adjusting buttons
+					panel.enableButtons();
 				}				
 			
 			}
