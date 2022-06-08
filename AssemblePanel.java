@@ -46,6 +46,7 @@ public class AssemblePanel extends JLayeredPane{
 	private Cook cookPanel;
 	
 	private boolean onScreen = false;
+	private int patties; 
 	
 	public AssemblePanel(ArrayList<Orders> orders){
 		
@@ -163,24 +164,36 @@ public class AssemblePanel extends JLayeredPane{
 		for(JComponent patty: completePatties) {
 			if(patty.getName().equals("BurntPatty") && !onScreen) {
 				BurntPatty p = new BurntPatty(226,yLevel, assembledBurger, assembledObjs, 'A', cookPanel, this);
-				onScreen = true;
+				patties++; 
 				add(p);
 				reorder(p);
 				yLevel -= 20;
+				if(patties == completePatties.size())
+				{
+					onScreen = true; 
+				}
 			}
 			if(patty.getName().equals("CookedPatty") && !onScreen) {
 				CookedPatty p = new CookedPatty(226,yLevel, assembledBurger, assembledObjs, 'A', cookPanel, this);
-				onScreen = true; 
+				patties++;  
 				add(p);
 				reorder(p);
 				yLevel -= 20;
+				if(patties == completePatties.size())
+				{
+					onScreen = true; 
+				}
 			}
 			if(patty.getName().equals("RawPatty") && !onScreen) {
 				RawPatty p = new RawPatty(226,yLevel, assembledBurger, assembledObjs, 'A', cookPanel, this);
-				onScreen = true; 
+				patties++;  
 				add(p);
 				reorder(p);
 				yLevel -= 20;
+				if(patties == completePatties.size())
+				{
+					onScreen = true; 
+				}
 			}
 		}
 	}
