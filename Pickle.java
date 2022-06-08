@@ -104,6 +104,9 @@ public class Pickle extends JComponent{
 					BurgeriaMain.changeMoney(-0.25);
 					panel.updateMoney();
 					
+					//adjusting buttons
+					panel.enableButtons();
+					
 				}				
 			
 			}
