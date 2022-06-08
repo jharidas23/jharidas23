@@ -75,6 +75,9 @@ public class RawPatty extends JComponent implements ActionListener{
 				System.out.println("mouse released");
 				if(screen == 'C')
 				{
+					BurgeriaMain.changeMoney(-1);
+					cPanel.updateMoney();
+					
 					System.out.println("cook screen"); 
 					if((getX()>250 && getX()<950)&&(getY()>155 && getY()<703))
 					{
@@ -122,6 +125,8 @@ public class RawPatty extends JComponent implements ActionListener{
 						assembledItems.add("Patty");
 						assembledObjs.add(obj);
 						donePlacing = true;
+						
+						BurgeriaMain.removeFromCompletePatty(obj);
 						
 						//adjusting buttons
 						assemblePanel.enableButtons();
