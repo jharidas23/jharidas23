@@ -3,8 +3,12 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.util.ArrayList;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.BorderFactory;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
@@ -121,7 +125,7 @@ public class BurgeriaMain extends JFrame{
 			
 			
 			
-			
+		playSound("background music.wav"); 	
 			
 			
 			
@@ -191,7 +195,7 @@ public class BurgeriaMain extends JFrame{
 	//this is for you to copy into your panel classes to make the tickets reappear each time
 	public void showTickets() {
 		for(int i = 0; i<BurgeriaMain.getTheOrders().size(); i++) {
-			ArrayList <String> ingredients = BurgeriaMain.getTheOrders().get(i).getListIngredientsForward();
+			ArrayList <String> ingredients = BurgeriaMain.getTheOrders().get(i).getListIngredients();
 			String combined = BurgeriaMain.getTheOrders().get(i).getTicketNumber()+"\n";
 			for(String item: ingredients) {
 				combined+=item+"\n";
@@ -199,8 +203,33 @@ public class BurgeriaMain extends JFrame{
 
 			JOptionPane optionPane = new JOptionPane(combined+"Cost to Make: $"+BurgeriaMain.getTheOrders().get(i).getPrice());
 			JDialog d = optionPane.createDialog((JFrame) null, "Order");
-			d.setLocation(700,100);
+			d.setLocation(800,100);
 			d.setVisible(true);
+		}
+	}
+	
+	public static void playSound(String location)
+	{
+		File musicPath = new File(location); 
+		
+		try
+		{
+			if(musicPath.exists())
+			{
+				AudioInputStream audioIn = AudioSystem.getAudioInputStream(musicPath);  
+			    Clip clip = AudioSystem.getClip();
+			    clip.open(audioIn);
+			    clip.start(); 
+			    clip.loop(Clip.LOOP_CONTINUOUSLY);
+			}
+			else
+			{
+				System.out.println("cant find file");
+			}
+		}
+		catch (Exception ex)
+		{
+			
 		}
 	}
 
