@@ -8,8 +8,12 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Ellipse2D.Double;
+import java.io.File;
 import java.util.ArrayList;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -24,6 +28,9 @@ public class Cook extends JPanel
 	private Ellipse2D.Double ticketCircle; 
 	private Ellipse2D.Double trash; 
 	private Ellipse2D.Double next; 
+	private Rectangle wireTop;
+	private Rectangle wireMiddle; 
+	private Rectangle wireBottom; 
 	private ArrayList<JComponent> rp; 
 	private ArrayList<String> order; 
 	private Cook cookPanel = this; 
@@ -76,6 +83,9 @@ public class Cook extends JPanel
 		trash = new Ellipse2D.Double(50,155,150,75);
 		next = new Ellipse2D.Double(1000,510,150,75);
 		ticketCircle = new Ellipse2D.Double(990,-20,250,250); 
+		wireTop = new Rectangle(0,10,1200,2);
+		wireMiddle = new Rectangle(0,12,1200,2);
+		wireBottom = new Rectangle(0,14,1200,3);
 	}
 	
 	public void paintComponent(Graphics g)
@@ -97,6 +107,12 @@ public class Cook extends JPanel
 		g2.setColor(new Color(57,54,54));
 		g2.fill(next);
 		
+		g2.setColor(new Color(192,192,192));
+		g2.fill(wireMiddle);
+		g2.setColor(Color.BLACK);
+		g2.fill(wireTop);
+		g2.fill(wireBottom);
+
 		g2.setColor(new Color(57,54,54));
 		g2.fill(ticketCircle);
 	}
