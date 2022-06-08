@@ -58,15 +58,17 @@ public class OrderPanel extends JPanel{
 			@Override
 			public void actionPerformed(ActionEvent e) 
 			{
-				Orders order = random(); 
-				JOptionPane pane = new JOptionPane();
-				ticketInformation.add(order);
-				String theOrder = order.getTicketNumber() + "\n" + orderofOrders(order) + "\nCost to Make: $" + order.getPrice();
-				final String menu = theOrder;
-				final JOptionPane optionPane = new JOptionPane(theOrder); 
-				final JDialog d = optionPane.createDialog((JFrame) null, "Order"); 
-				d.setLocation(1000,100);
-				d.setVisible(true);
+				if(BurgeriaMain.getNumOrders() < 8) {
+					Orders order = random(); 
+					JOptionPane pane = new JOptionPane();
+					ticketInformation.add(order);
+					String theOrder = order.getTicketNumber() + "\n" + orderofOrders(order) + "\nPrice: $" + order.getPrice();
+					final String menu = theOrder;
+					final JOptionPane optionPane = new JOptionPane(theOrder); 
+					final JDialog d = optionPane.createDialog((JFrame) null, "Order"); 
+					d.setLocation(1000,100);
+					d.setVisible(true);
+				}
 			}
 			
 		});
