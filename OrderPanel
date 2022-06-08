@@ -188,7 +188,7 @@ public class OrderPanel extends JPanel{
 		
 		theOrder.add(order.getCondiments()); 
 		for(int i = 0; i < order.getPatties(); i ++) {
-			theOrder.add("Patties");
+			theOrder.add("Patty");
 		}
 		if(order.getCheese() == true) {
 			theOrder.add("Cheese");
@@ -197,13 +197,13 @@ public class OrderPanel extends JPanel{
 			theOrder.add("Lettuce");
 		}
 		if(order.getTomatoes() == true) {
-			theOrder.add("Tomatoes");
+			theOrder.add("Tomato");
 		}
 		if(order.getPickles() == true) {
-			theOrder.add("Pickles");
+			theOrder.add("Pickle");
 		}
 		if(order.getOnions() == true) {
-			theOrder.add("Onions");
+			theOrder.add("Onion");
 		}
 		String done = ""; 
 		done += "Top Bun \n";
@@ -216,6 +216,20 @@ public class OrderPanel extends JPanel{
 		return done;
 	}
 	
+	public void showTickets() {
+		for(int i = 0; i<BurgeriaMain.getTheOrders().size(); i++) {
+			ArrayList <String> ingredients = BurgeriaMain.getTheOrders().get(i).getListIngredientsForward();
+			String combined = BurgeriaMain.getTheOrders().get(i).getTicketNumber()+"\n";
+			for(String item: ingredients) {
+				combined+=item+"\n";
+			}
+
+			JOptionPane optionPane = new JOptionPane(combined+"Cost to Make: $"+BurgeriaMain.getTheOrders().get(i).getPrice());
+			JDialog d = optionPane.createDialog((JFrame) null, "Order");
+			d.setLocation(700,100);
+			d.setVisible(true);
+		}
+	}
 
 
 }
