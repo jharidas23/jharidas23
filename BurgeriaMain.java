@@ -7,10 +7,12 @@ import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.JComponent;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
@@ -18,7 +20,6 @@ public class BurgeriaMain extends JFrame{
 	
 	private static ArrayList <Orders> theOrders;
 	private static double money;
-	private static int numOrders;
 	private static ArrayList<JComponent> completePatties;
 	
 	private static AssemblePanel assemblePanel;
@@ -37,7 +38,6 @@ public class BurgeriaMain extends JFrame{
 		//initialize fields
 		theOrders = new ArrayList<Orders>();
 		money = 5;
-		numOrders = 0;
 		completePatties = new ArrayList<JComponent>();
 		assemblePanel = new AssemblePanel(theOrders);
 		cookPanel = new Cook(theOrders);
@@ -88,6 +88,7 @@ public class BurgeriaMain extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				cl.show(BurgeriaMainPanel, "Order Panel");
+				//orderPanel.showTickets();
 			}
 
 		});
@@ -97,6 +98,7 @@ public class BurgeriaMain extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				cl.show(BurgeriaMainPanel, "Cook Panel");
+				//cookPanel.showTickets();
 			}
 
 		});
@@ -106,9 +108,9 @@ public class BurgeriaMain extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				cl.show(BurgeriaMainPanel, "Assemble Panel");
-				//assemblePanel.add(comp)
 				assemblePanel.addButtons();
-				assemblePanel.drawPatty(completePatties);
+				assemblePanel.drawPatties(completePatties);
+				assemblePanel.showTickets();
 			}
 
 		});
@@ -144,8 +146,8 @@ public class BurgeriaMain extends JFrame{
 	public static void changeMoney(double amt) {
 		money += amt;
 	}
-	public static ArrayList<JComponent> getCompletePatties(){
-		return completePatties;
+	public static void addCompletePatty(JComponent patty){
+		completePatties.add(patty);
 	}
 	
 	public static double getPrice(int i) {
@@ -176,6 +178,25 @@ public class BurgeriaMain extends JFrame{
 		return cookPanel;
 	}
 	
+	public static void removeOrder(int index) {
+		theOrders.remove(index);
+	}
+	
+	//this is for you to copy into your panel classes to make the tickets reappear each time
+	public void showTickets() {
+		for(int i = 0; i<BurgeriaMain.getTheOrders().size(); i++) {
+			ArrayList <String> ingredients = BurgeriaMain.getTheOrders().get(i).getListIngredients();
+			String combined = BurgeriaMain.getTheOrders().get(i).getTicketNumber()+"\n";
+			for(String item: ingredients) {
+				combined+=item+"\n";
+			}
+
+			JOptionPane optionPane = new JOptionPane(combined+"Cost to Make: $"+BurgeriaMain.getTheOrders().get(i).getPrice());
+			JDialog d = optionPane.createDialog((JFrame) null, "Order");
+			d.setLocation(800,100);
+			d.setVisible(true);
+		}
+	}
 
 		
 }
