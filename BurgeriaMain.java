@@ -94,7 +94,8 @@ public class BurgeriaMain extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				cl.show(BurgeriaMainPanel, "Order Panel");
-				//orderPanel.showTickets();
+				orderPanel.showTickets();
+				orderPanel.updateMoney();
 			}
 
 		});
@@ -104,7 +105,8 @@ public class BurgeriaMain extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				cl.show(BurgeriaMainPanel, "Cook Panel");
-				//cookPanel.showTickets();
+				cookPanel.showTickets();
+				cookPanel.updateMoney();
 			}
 
 		});
@@ -117,6 +119,7 @@ public class BurgeriaMain extends JFrame{
 				assemblePanel.addButtons();
 				assemblePanel.drawPatties(completePatties);
 				assemblePanel.showTickets();
+				assemblePanel.updateMoney();
 			}
 
 		});
@@ -154,6 +157,9 @@ public class BurgeriaMain extends JFrame{
 	}
 	public static void addCompletePatty(JComponent patty){
 		completePatties.add(patty);
+	}
+	public static void removeFromCompletePatty(JComponent patty) {
+		completePatties.remove(patty);
 	}
 	
 	public static double getPrice(int i) {
