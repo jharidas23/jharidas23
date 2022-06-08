@@ -120,6 +120,10 @@ public class BurgeriaMain extends JFrame{
 				assemblePanel.drawPatties(completePatties);
 				assemblePanel.showTickets();
 				assemblePanel.updateMoney();
+				
+				for(JComponent patty: completePatties) {
+					System.out.println(patty.getName());
+				}
 			}
 
 		});
@@ -158,7 +162,7 @@ public class BurgeriaMain extends JFrame{
 	public static void addCompletePatty(JComponent patty){
 		completePatties.add(patty);
 	}
-	public static void removeFromCompletePatty(JComponent patty) {
+	public static void removeFromCompletePatties(JComponent patty) {
 		completePatties.remove(patty);
 	}
 	
