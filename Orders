@@ -1,4 +1,5 @@
 import java.awt.geom.Rectangle2D.Double;
+import java.util.ArrayList;
 
 public class Orders {
 	
@@ -17,33 +18,48 @@ public class Orders {
 	private static int ticketNumber = 0; 
 	private double price; 
 	
+	private ArrayList<String> listIngredients;
+	
 	public Orders(int p, String c, boolean ch, boolean l, boolean pi, boolean t, boolean o) {
 		patties = p; 
 		price += p; 
 		condiments = c;
 		price += 0.5; 
 		cheese = ch; 
-		if(cheese) {
-			price += 0.5; 
-		}
-		lettuce = l; 
-		if(lettuce) {
+		listIngredients = new ArrayList<String>();
+		listIngredients.add("BottomBun");
+		onions = o; 
+		if(onions) {
 			price += 0.25; 
+			listIngredients.add("Onion");
 		}
 		pickles = pi; 
 		if(pickles) {
 			price += 0.25; 
+			listIngredients.add("Pickle");
 		}
 		tomatoes = t; 
 		if(tomatoes) {
 			price += 0.25; 
+			listIngredients.add("Tomatoe");
 		}
-		onions = o; 
-		if(onions) {
+		lettuce = l; 
+		if(lettuce) {
 			price += 0.25; 
+			listIngredients.add("Lettuce");
+		}
+		if(cheese) {
+			price += 0.5;
+			listIngredients.add("Cheese");
+		}
+		for(int i = 0; i<patties; i++) {
+			listIngredients.add("Patty");
 		}
 		price += 0.80; 
 		ticketNumber ++; 
+		
+		listIngredients.add(condiments);
+		listIngredients.add("TopBun");
 	}
 	
 	public int getPatties() {
@@ -99,6 +115,8 @@ public class Orders {
 	public double getPrice() {
 		return price; 
 	}
+	public ArrayList<String> getListIngredients(){
+		return listIngredients;
+	}
 
 }
-
