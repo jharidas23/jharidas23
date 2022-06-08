@@ -88,6 +88,9 @@ public class Onion extends JComponent{
 					BurgeriaMain.changeMoney(-0.25);
 					panel.updateMoney();
 					
+					//adjusting buttons
+					panel.enableButtons();
+					
 				}				
 			
 			}
