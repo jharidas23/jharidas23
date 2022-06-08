@@ -8,15 +8,13 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Ellipse2D.Double;
-import java.io.File;
 import java.util.ArrayList;
 
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
 import javax.swing.JComponent;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
@@ -28,16 +26,10 @@ public class Cook extends JPanel
 	private Ellipse2D.Double ticketCircle; 
 	private Ellipse2D.Double trash; 
 	private Ellipse2D.Double next; 
-	private Rectangle wireTop;
-	private Rectangle wireMiddle; 
-	private Rectangle wireBottom; 
 	private ArrayList<JComponent> rp; 
 	private ArrayList<String> order; 
 	private Cook cookPanel = this; 
-	private AssemblePanel assemblePanel; 
-	private JLabel lblMoney; 
-	private JLabel lblTrash; 
-	private JLabel lblNext; 
+	private AssemblePanel assemblePanel;
 	
 	public Cook(ArrayList<Orders> orders)
 	{ 
@@ -52,27 +44,30 @@ public class Cook extends JPanel
 		
 		rp = new ArrayList<JComponent>(); 
 		
-		rp.add(new RawPatty(50,550,order,BurgeriaMain.getAssemblePanel().getAssembledObjs(),'C', cookPanel, assemblePanel));
+		rp.add(new RawPatty(50,550,order, BurgeriaMain.getAssemblePanel().getAssembledObjs(), 'C', cookPanel, assemblePanel));
 		rp.add(new RawPatty(50,520,order,BurgeriaMain.getAssemblePanel().getAssembledObjs(),'C', cookPanel, assemblePanel)); 
-		rp.add(new RawPatty(50,490,order,BurgeriaMain.getAssemblePanel().getAssembledObjs(),'C', cookPanel, assemblePanel));
-		rp.add(new RawPatty(50,460,order,BurgeriaMain.getAssemblePanel().getAssembledObjs(),'C', cookPanel, assemblePanel)); 
+		rp.add(new RawPatty(50,490,order,BurgeriaMain.getAssemblePanel().getAssembledObjs(), 'C', cookPanel, assemblePanel));
+		rp.add(new RawPatty(50,460,order,BurgeriaMain.getAssemblePanel().getAssembledObjs(), 'C', cookPanel, assemblePanel)); 
 		
 		for(int i = 0; i<rp.size(); i++)
 		{
 			add(rp.get(i)); 
 		}
+	}
+	
+	public static void main(String[] args)
+	{
+		JFrame myFrame = new JFrame ("test"); 
+		myFrame.setBounds(0,0,1200,650);
 		
-		lblTrash = new JLabel("Trash");
-		lblTrash.setBounds(112,230,100,20);
-		add(lblTrash);
+		ArrayList<Orders> o = new ArrayList<Orders>(); 
 		
-		lblNext = new JLabel("Next");
-		lblNext.setBounds(1062,490,100,20);
-		add(lblNext);
 		
-		lblMoney = new JLabel("Balance: $"+BurgeriaMain.getMoney());
-		lblMoney.setBounds(3,15,100,20);
-		add(lblMoney);
+		JPanel panel = new Cook(o); 
+		myFrame.add(panel); 
+		
+		myFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		myFrame.setVisible(true);
 	}
 	
 	public void drawBackground()
@@ -83,9 +78,6 @@ public class Cook extends JPanel
 		trash = new Ellipse2D.Double(50,155,150,75);
 		next = new Ellipse2D.Double(1000,510,150,75);
 		ticketCircle = new Ellipse2D.Double(990,-20,250,250); 
-		wireTop = new Rectangle(0,10,1200,2);
-		wireMiddle = new Rectangle(0,12,1200,2);
-		wireBottom = new Rectangle(0,14,1200,3);
 	}
 	
 	public void paintComponent(Graphics g)
@@ -107,12 +99,6 @@ public class Cook extends JPanel
 		g2.setColor(new Color(57,54,54));
 		g2.fill(next);
 		
-		g2.setColor(new Color(192,192,192));
-		g2.fill(wireMiddle);
-		g2.setColor(Color.BLACK);
-		g2.fill(wireTop);
-		g2.fill(wireBottom);
-
 		g2.setColor(new Color(57,54,54));
 		g2.fill(ticketCircle);
 	}
@@ -131,7 +117,19 @@ public class Cook extends JPanel
 	{
 		return rp; 
 	}
-	public void updateMoney() {
-		lblMoney.setText("Balance: $"+BurgeriaMain.getMoney());
+	
+	public void showTickets() {
+		for(int i = 0; i<BurgeriaMain.getTheOrders().size(); i++) {
+			ArrayList <String> ingredients = BurgeriaMain.getTheOrders().get(i).getListIngredientsForward();
+			String combined = BurgeriaMain.getTheOrders().get(i).getTicketNumber()+"\n";
+			for(String item: ingredients) {
+				combined+=item+"\n";
+			}
+
+			JOptionPane optionPane = new JOptionPane(combined+"Cost to Make: $"+BurgeriaMain.getTheOrders().get(i).getPrice());
+			JDialog d = optionPane.createDialog((JFrame) null, "Order");
+			d.setLocation(700,100);
+			d.setVisible(true);
+		}
 	}
 }
