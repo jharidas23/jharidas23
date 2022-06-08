@@ -26,10 +26,14 @@ public class BurgeriaMain extends JFrame{
 	private static Cook cookPanel;
 	private static IntroPanel introPanel;
 	
+	private static CardLayout cl;
+	private static JPanel BurgeriaMainPanel;
+	private static OrderPanel orderPanel;
+	
 	public BurgeriaMain() {
 		//making overall panel
-		CardLayout cl = new CardLayout();
-		JPanel BurgeriaMainPanel = new JPanel();
+		cl = new CardLayout();
+		BurgeriaMainPanel = new JPanel();
 		BurgeriaMainPanel.setLayout(cl);
 		setResizable(false);
 		
@@ -41,10 +45,11 @@ public class BurgeriaMain extends JFrame{
 		//initialize fields
 		theOrders = new ArrayList<Orders>();
 		money = 5;
-		introPanel = new IntroPanel(); 
 		completePatties = new ArrayList<JComponent>();
 		assemblePanel = new AssemblePanel(theOrders);
 		cookPanel = new Cook(theOrders);
+		introPanel = new IntroPanel(); 
+		orderPanel = new OrderPanel(theOrders);
 
 
 		//making menu
@@ -72,11 +77,11 @@ public class BurgeriaMain extends JFrame{
 
 			
 		//add each panel to main panel
-			OrderPanel orderPanel = new OrderPanel(theOrders);
-			BurgeriaMainPanel.add(introPanel, "Intro Panel");
-			BurgeriaMainPanel.add(orderPanel, "Order Panel");
-			BurgeriaMainPanel.add(assemblePanel, "Assemble Panel");
-			BurgeriaMainPanel.add(cookPanel, "Cook Panel");	
+		BurgeriaMainPanel.add(introPanel, "Intro Panel");
+		cl.show(BurgeriaMainPanel, "Intro Panel");
+		BurgeriaMainPanel.add(orderPanel, "Order Panel");
+		BurgeriaMainPanel.add(assemblePanel, "Assemble Panel");
+		BurgeriaMainPanel.add(cookPanel, "Cook Panel");	
 						
 		//action listeners
 
@@ -177,6 +182,10 @@ public class BurgeriaMain extends JFrame{
 	
 	public static void removeOrder(int index) {
 		theOrders.remove(index);
+	}
+	
+	public static void showOrderPanel() {
+		cl.show(BurgeriaMainPanel, "Order Panel");
 	}
 	
 	//this is for you to copy into your panel classes to make the tickets reappear each time
